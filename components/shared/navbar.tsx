@@ -15,6 +15,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Button } from "../ui/button";
 import RentNestLogo from "./RentNestLogo";
+import type { NavbarProps } from "@/lib/types";
 
 const navItems = [
   { label: "Home", href: "/" },
@@ -26,44 +27,16 @@ const userMenuItems = [
   { label: "Account", icon: User, action: "account" },
 ];
 
-type IUser = {
-  success: boolean,
-  message: string,
-  data: {
-    profile: {
-      id: string,
-      name: string,
-      email: string,
-      activeStatus: string,
-      role: string,
-      createdAt: string,
-      updatedAt: string,
-      profile: {
-        id: string,
-        profilePhoto: string,
-        bio: string | null,
-        userId: string,
-        createdAt: string,
-        updatedAt: string
-      }
-    }
-  }
-}
-
-type NavbarProps = {
-  user: IUser
-}
-
 export function Navbar({ user }: NavbarProps) {
   const router = useRouter()
   const handleUserMenuAction = async (action: string) => {
 
     if (action === "dashboard") {
-      if (user.data.profile.role === "TENANT")
+      if (user.data.role === "TENANT")
         router.push("/tenant-dashboard");
-      else if (user.data.profile.role === "LANDLORD")
+      else if (user.data.role === "LANDLORD")
         router.push("/landlord-dashboard");
-      else if (user.data.profile.role === "ADMIN")
+      else if (user.data.role === "ADMIN")
         router.push("/admin-dashboard");
       else
         toast("Oops! Something went wrong");
@@ -117,10 +90,10 @@ export function Navbar({ user }: NavbarProps) {
                   <DropdownMenuLabel className="font-normal">
                     <div className="flex flex-col gap-1">
                       <p className="text-sm font-medium">
-                        {user.data?.profile.name}
+                        {user.data?.name}
                       </p>
                       <p className="text-xs text-muted-foreground">
-                        {user.data?.profile.email}
+                        {user.data?.email}
                       </p>
                     </div>
                   </DropdownMenuLabel>

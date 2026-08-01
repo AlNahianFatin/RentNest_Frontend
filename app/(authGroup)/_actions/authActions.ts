@@ -4,6 +4,7 @@ import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
 import jwt, { JwtPayload } from "jsonwebtoken"
 import { toast } from "sonner"
+import { UserRole } from "@/lib/types"
 
 type LoginState = {
     success: boolean,
@@ -46,20 +47,16 @@ export const LoginAction = async (redirectTo: string, previousState: LoginState,
             sameSite: "lax"
         });
 
-        // redirect("/dashboard", "push"); //by default redirect (server side) redirects as "push", meaning it stores the previous page in history. So, we can go back to the previous page (login in this case), by clicking back button in browser
-
-        // // or by selecting "replace", the login page history won't be stored in browser history and by clicking back, we won't be able to go back to the login page
-
-        if (redirectTo && typeof redirectTo === "string" && redirectTo.startsWith("/") && !redirectTo.startsWith("//"))
-            redirect(redirectTo);
+        // if (redirectTo && typeof redirectTo === "string" && redirectTo.startsWith("/") && !redirectTo.startsWith("//"))
+        //     redirect(redirectTo);
 
         const decodedToken = jwt.decode(result.data.accessToken) as JwtPayload;
 
-        if (decodedToken.role === "USER")
-            redirect("/dashboard");
-        else if (decodedToken.role === "AUTHOR")
-            redirect("/author-dashboard");
-        else if (decodedToken.role === "ADMIN")
+        if (decodedToken.role === UserRole.TENANT)
+            redirect("/tenant-dashboard");
+        else if (decodedToken.role === UserRole.LANDLORD)
+            redirect("/landlord-dashboard");
+        else if (decodedToken.role === UserRole.ADMIN)
             redirect("/admin-dashboard");
         else
             toast("Oops! Something went wrong");

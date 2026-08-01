@@ -1,6 +1,12 @@
 import { LucideProps } from "lucide-react";
 import { ForwardRefExoticComponent, RefAttributes } from "react";
 
+export enum UserRole {
+    TENANT = "TENANT",
+    LANDLORD = "LANDLORD",
+    ADMIN = "ADMIN",
+}
+
 export type IPostStatus = "DRAFT" | "PUBLISHED" | "ARCHIVED";
 
 export type IAuthor = {
@@ -45,25 +51,21 @@ export type IPost = {
 
 type IUser = {
     success: boolean,
+    statusCode: number,
     message: string,
     data: {
-        profile: {
-            id: string,
-            name: string,
-            email: string,
-            activeStatus: string,
-            role: string,
-            createdAt: string,
-            updatedAt: string,
-            profile: {
-                id: string,
-                profilePhoto: string,
-                bio: string | null,
-                userId: string,
-                createdAt: string,
-                updatedAt: string
-            }
-        }
+        id: string,
+        name: string,
+        email: string,
+        activeStatus: string,
+        role: UserRole,
+        createdAt: string,
+        updatedAt: string,
+        properties?: [],
+        payments?: [],
+        reviews?: [],
+        tenantRequests?: [],
+        landlordRequests?: []
     }
 }
 

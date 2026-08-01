@@ -1,8 +1,9 @@
 import { Suspense } from "react";
-import { PropertySkeleton } from "../_components/properties/PropertySkeleton";
-import { PublicPropertyList } from "../_components/properties/PublicPropertyList";
+import { PropertiesSkeleton } from "../_components/properties/PropertiesSkeleton";
+import { PublicPropertiesList } from "../_components/properties/PublicPropertiesList";
+import { PropertySearchBar } from "../_components/properties/PropertySearchBar";
 
-const NewsPage = () => {
+const PropertiesPage = () => {
   return (
     <div className="mx-auto max-w-7xl space-y-6 px-4 py-10 sm:px-6 lg:px-8">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -12,13 +13,15 @@ const NewsPage = () => {
             Browse the available properties to rent.
           </p>
         </div>
+
+        <PropertySearchBar/>
       </div>
 
-      <Suspense fallback={<PropertySkeleton />}>
-        <PublicPropertyList />
+      <Suspense fallback={<PropertiesSkeleton />}>
+        <PublicPropertiesList />
       </Suspense>
     </div>
   );
 };
 
-export default NewsPage;
+export default PropertiesPage;

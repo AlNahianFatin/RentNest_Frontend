@@ -3,14 +3,14 @@ import { PropertyCard } from "@/app/(publicGroup)/_components/properties/Propert
 import { IProperty } from "@/lib/types";
 import { getPublicProperties } from "../../_actions/getPublicProperties";
 
-export async function PublicPropertyList({
+export async function PublicPropertiesList({
     searchParams,
 }: {
     searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
     const query = await searchParams;
     const result = await getPublicProperties({ query });
-console.log(result)
+
     if (!result.success || !result.data?.length) {
         return (
             <p className="py-12 text-center text-muted-foreground">

@@ -1,6 +1,6 @@
 "use server"
 
-import { cookies } from "next/headers";
+// import { cookies } from "next/headers";
 
 export const getPublicProperties = async ({ query }: { query?: { [key: string]: string | string[] | undefined } }) => {
     const params = new URLSearchParams()
@@ -32,7 +32,6 @@ export const getPublicProperties = async ({ query }: { query?: { [key: string]: 
     });
 
     const result = await res.json();
-    console.log(res)
 
     return result;
 }

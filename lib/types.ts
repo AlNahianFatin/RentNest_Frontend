@@ -79,7 +79,7 @@ type IUser = {
     landlordRequests?: IRentalRequest[]
 }
 
-type IReview = {
+export type IReview = {
     id: string,
     rating: number,
     comment?: string,
@@ -91,11 +91,14 @@ type IReview = {
     reviewer: IUser
 }
 
-type ICategory = {
+export type ICategory = {
     id: string,
     propertyType: string,
     createdAt: string,
-    updatedAt: string
+    updatedAt: string,
+    _count: {
+        properties: number
+    }
 }
 
 export type IProperty = {
@@ -103,9 +106,10 @@ export type IProperty = {
     houseNo: number,
     roadNo: number,
     location: string,
-    thumbnail?: string,
+    thumbnail: string,
     price: number,
     status: PropertyStatus,
+    averageRating: number,
     createdAt: string,
     updatedAt: string,
     stripeProductId: string,

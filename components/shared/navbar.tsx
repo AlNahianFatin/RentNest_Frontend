@@ -15,7 +15,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Button } from "../ui/button";
 import RentNestLogo from "./RentNestLogo";
-import type { NavbarProps } from "@/lib/types";
+import { UserRole, type NavbarProps } from "@/lib/types";
 
 const navItems = [
   { label: "Home", href: "/" },
@@ -32,11 +32,11 @@ export function Navbar({ user }: NavbarProps) {
   const handleUserMenuAction = async (action: string) => {
 
     if (action === "dashboard") {
-      if (user.data.role === "TENANT")
+      if (user.data.role === UserRole.TENANT)
         router.push("/tenant-dashboard");
-      else if (user.data.role === "LANDLORD")
+      else if (user.data.role === UserRole.LANDLORD)
         router.push("/landlord-dashboard");
-      else if (user.data.role === "ADMIN")
+      else if (user.data.role === UserRole.ADMIN)
         router.push("/admin-dashboard");
       else
         toast("Oops! Something went wrong");

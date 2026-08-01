@@ -48,7 +48,6 @@ export const isAccessTokenExist = async () => {
     const decodedRefreshToken = refreshToken ? await verifyToken(refreshToken, process.env.JWT_REFRESH_SECRET as string) : null;
 
     if (!decodedAccessToken?.success && decodedRefreshToken?.success) {
-        //access token has expired but refresh token is valid, get new access token from backend
         const result = await getNewAccessToken();
 
         if (result.success) {

@@ -4,6 +4,7 @@ import type { NextRequest } from 'next/server'
 import { verifyToken } from './utils/jwt'
 import { JwtPayload } from 'jsonwebtoken'
 import { getNewAccessToken } from './service/refreshToken';
+import { UserRole } from './lib/types';
 // import { getSubscriptionStatus } from './app/(publicGroup)/_actions/getSubscriptionStatus';
 
 const AUTH_ROUTES = [
@@ -68,21 +69,21 @@ export async function proxy(request: NextRequest) {
         userRole = (decodedAccessToken.data as JwtPayload).role;
 
     if (accessToken && AUTH_ROUTES.includes(pathName)) {
-        if (userRole === "USER")
-            return NextResponse.redirect(new URL('/dashboard', request.url));
-        else if (userRole === "AUTHOR")
-            return NextResponse.redirect(new URL('/author-dashboard', request.url));
-        else if (userRole === "ADMIN")
+        if (userRole === UserRole.TENANT)
+            return NextResponse.redirect(new URL('/tenant-dashboard', request.url));
+        else if (userRole === UserRole.LANDLORD)
+            return NextResponse.redirect(new URL('/landlord-dashboard', request.url));
+        else if (userRole === UserRole.ADMIN)
             return NextResponse.redirect(new URL('/admin-dashboard', request.url));
         else
             return NextResponse.redirect(new URL('/', request.url));
     }
 
-    if (pathName.startsWith("/dashboard") && userRole !== "USER")
+    if (pathName.startsWith("/tenant-dashboard") && userRole !== UserRole.TENANT)
         return NextResponse.redirect(new URL('/not-found', request.url));
-    else if (pathName.startsWith("/author-dashboard") && userRole !== "AUTHOR")
+    else if (pathName.startsWith("/landlord-dashboard") && userRole !== UserRole.LANDLORD)
         return NextResponse.redirect(new URL('/not-found', request.url));
-    else if (pathName.startsWith("/admin-dashboard") && userRole !== "ADMIN")
+    else if (pathName.startsWith("/admin-dashboard") && userRole !== UserRole.ADMIN)
         return NextResponse.redirect(new URL('/not-found', request.url));
 
     // if (pathName.startsWith("/premium")) {
@@ -103,7 +104,6 @@ export async function proxy(request: NextRequest) {
     //         return NextResponse.redirect(new URL('/premium', request.url));
     // }
 
-    // return NextResponse.redirect(new URL('/', request.url))
     return NextResponse.next();
 }
 

@@ -47,9 +47,6 @@ export const LoginAction = async (redirectTo: string, previousState: LoginState,
             sameSite: "lax"
         });
 
-        // if (redirectTo && typeof redirectTo === "string" && redirectTo.startsWith("/") && !redirectTo.startsWith("//"))
-        //     redirect(redirectTo);
-
         const decodedToken = jwt.decode(result.data.accessToken) as JwtPayload;
 
         if (decodedToken.role === UserRole.TENANT)
@@ -61,6 +58,46 @@ export const LoginAction = async (redirectTo: string, previousState: LoginState,
         else
             toast("Oops! Something went wrong");
     }
+
+    return result;
+}
+
+type RegisterState = {
+    success: boolean,
+    statusCode: number,
+    message: string,
+    data: {
+        id: string,
+        name: string,
+        email: string,
+        activeStatus: string,
+        role: UserRole,
+        createdAt: string,
+        updatedAt: string
+    }
+}
+
+export const RegisterAction = async (redirectTo: string, previousState: LoginState, formData: FormData) => {
+    const name = formData.get("name");
+    const email = formData.get("email");
+    const password = formData.get("password");
+    const role = formData.get("role");
+
+    const payload = { name, email, password, role };
+
+    const res = await fetch(`${process.env.BACKEND_API_URL}/api/auth/register`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+    });
+
+    const result = await res.json();
+
+    if (result.success)
+        // toast("Regstration successful. Login now to access the endless possibilities");
+        redirect("/login?registration=success");
 
     return result;
 } 

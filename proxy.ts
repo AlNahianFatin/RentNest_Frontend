@@ -14,7 +14,7 @@ const AUTH_ROUTES = [
 
 const PUBLIC_ROUTES = [
     "/",
-    "/rentals"
+    "/properties"
 ]
 
 export async function proxy(request: NextRequest) {
@@ -31,6 +31,8 @@ export async function proxy(request: NextRequest) {
 
     const decodedRefreshToken = refreshToken ? await verifyToken(refreshToken, process.env.JWT_REFRESH_SECRET as string) : null;
 
+
+    // access token expired, renewing access token
     if (!decodedAccessToken?.success && decodedRefreshToken?.success) {
         const result = await getNewAccessToken();
 
@@ -48,13 +50,17 @@ export async function proxy(request: NextRequest) {
         }
     }
 
-    if (!decodedAccessToken?.success) 
+
+    // access token invalid, deleting from cookie
+    if (!decodedAccessToken?.success)
         cookieStore.delete("accessToken");
 
     const isPublicRoute = PUBLIC_ROUTES.some((route) => pathName === route || pathName.startsWith(route + "/"));
 
     const isAuthRoute = AUTH_ROUTES.some((route) => pathName === route || pathName.startsWith(route + "/"));
 
+
+    // not logged in and trying to access private routes, rerouting to login
     if (!accessToken && !isPublicRoute && !isAuthRoute) {
         const loginUrl = new URL('/login', request.url);
 
@@ -68,6 +74,8 @@ export async function proxy(request: NextRequest) {
     if (decodedAccessToken?.success && decodedAccessToken.data)
         userRole = (decodedAccessToken.data as JwtPayload).role;
 
+
+    // already logged in and trying to access auth routes, redirecting to role-specific dashboard
     if (accessToken && AUTH_ROUTES.includes(pathName)) {
         if (userRole === UserRole.TENANT)
             return NextResponse.redirect(new URL('/tenant-dashboard', request.url));
@@ -79,6 +87,8 @@ export async function proxy(request: NextRequest) {
             return NextResponse.redirect(new URL('/', request.url));
     }
 
+
+    // user trying to access dashboard not related to himself, rerouting to not-found page 
     if (pathName.startsWith("/tenant-dashboard") && userRole !== UserRole.TENANT)
         return NextResponse.redirect(new URL('/not-found', request.url));
     else if (pathName.startsWith("/landlord-dashboard") && userRole !== UserRole.LANDLORD)
@@ -89,7 +99,7 @@ export async function proxy(request: NextRequest) {
     // if (pathName.startsWith("/premium")) {
     //     const subscriptionStatus = await getSubscriptionStatus();
 
-        // const isActive = Boolean(subscriptionStatus?.success && subscriptionStatus.data?.isSubscribed);
+    // const isActive = Boolean(subscriptionStatus?.success && subscriptionStatus.data?.isSubscribed);
 
     //     if (!(userRole === "ADMIN") && !isActive)
     //         return NextResponse.redirect(new URL('/payment', request.url));
@@ -109,6 +119,6 @@ export async function proxy(request: NextRequest) {
 
 export const config = {
     matcher: [
-        '/((?!api|_next/static|_next/image|.*\\.png$).*)',
-    ],
+        '/((?!api|_next/static|_next/image|favicon.ico|.*\\.png$).*)',
+    ]
 }

@@ -98,11 +98,12 @@ type ICategory = {
     updatedAt: string
 }
 
-type IProperty = {
+export type IProperty = {
     id: string,
     houseNo: number,
     roadNo: number,
     location: string,
+    thumbnail?: string,
     price: number,
     status: PropertyStatus,
     createdAt: string,
@@ -116,24 +117,24 @@ type IProperty = {
     type: ICategory
 }
 
-type IPropertyResponse = {
-    success: boolean,
-    statusCode: number,
-    message: string,
-    data: IProperty[],
-    meta?: {
-        page?: number,
-        limit?: number,
-        totalAvailablePropertyCount: number,
-        totalRentedPropertyCount?: number,
-        totalPropertyCount?: number,
-        totalPageCount?: number
-    }
-}
+// type IPropertyResponse = {
+//     success: boolean,
+//     statusCode: number,
+//     message: string,
+//     data: IProperty[],
+//     meta?: {
+//         page?: number,
+//         limit?: number,
+//         totalAvailablePropertyCount: number,
+//         totalRentedPropertyCount?: number,
+//         totalPropertyCount?: number,
+//         totalPageCount?: number
+//     }
+// }
 
-export type PropertyProps = {
-    poperty: IPropertyResponse
-}
+// export type PropertyProps = {
+//     property: IPropertyResponse
+// }
 
 type IUserResponse = {
     success: boolean,

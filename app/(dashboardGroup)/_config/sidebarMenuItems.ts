@@ -1,5 +1,5 @@
 import { ISidebarItem } from "@/lib/types"
-import { FileText, LayoutDashboard } from "lucide-react"
+import { FileText, LayoutDashboard, ScrollText, ClipboardClock, MessageSquareMore } from "lucide-react"
 import { ADMIN_SIDEBAR_ITEMS } from "./adminSidebarItems"
 import { LANDLORD_SIDEBAR_ITEMS } from "./landlordSidebarItems"
 
@@ -12,8 +12,23 @@ const TENANT_SIDEBAR_ITEMS: ISidebarItem[] = [
     },
     {
         label: "My Rents",
-        href: "/tenants-dashboard/my-rents",
+        href: "/tenant-dashboard/my-rents",
         icon: FileText
+    },
+    {
+        label: "My Rental Requests",
+        href: "/tenant-dashboard/my-rental-requests",
+        icon: ScrollText
+    },
+    {
+        label: "My Rental Records",
+        href: "/tenant-dashboard/my-rental-records",
+        icon: ClipboardClock
+    },
+    {
+        label: "My Reviews",
+        href: "/tenant-dashboard/my-reviews",
+        icon: MessageSquareMore
     },
 ]
 

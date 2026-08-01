@@ -13,7 +13,7 @@ const AUTH_ROUTES = [
 
 const PUBLIC_ROUTES = [
     "/",
-    "/news"
+    "/rentals"
 ]
 
 export async function proxy(request: NextRequest) {

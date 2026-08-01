@@ -1,20 +1,30 @@
 import { ISidebarItem } from "@/lib/types";
-import { FileText, LayoutDashboard } from "lucide-react";
+import { FileText, LayoutDashboard, ClipboardType, UsersRound, ScrollText } from "lucide-react";
 
 export const ADMIN_SIDEBAR_ITEMS: ISidebarItem[] = [
     {
-        label : "Dashboard",
-        href : "/admin-dashboard",
-        icon : LayoutDashboard
+        label: "Dashboard",
+        href: "/admin-dashboard",
+        icon: LayoutDashboard
     },
-    // {
-    //     label : "My Posts",
-    //     href : "/admin-dashboard/my-posts",
-    //     icon : FileText
-    // },
-    // {
-    //     label : "Premium Posts",
-    //     href : "/premium",
-    //     icon : FileText
-    // },
+    {
+        label: "Rental Categories",
+        href: "/admin-dashboard/categories",
+        icon: ClipboardType
+    },
+    {
+        label: "All Poperties",
+        href: "/admin-dashboard/properties",
+        icon: FileText
+    },
+    {
+        label: "All Rental Requests",
+        href: "/admin-dashboard/rental-requests",
+        icon: ScrollText
+    },
+    {
+        label: "Users",
+        href: "/admin-dashboard/users",
+        icon: UsersRound
+    },
 ]

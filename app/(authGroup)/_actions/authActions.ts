@@ -77,7 +77,7 @@ type RegisterState = {
     }
 }
 
-export const RegisterAction = async (redirectTo: string, previousState: LoginState, formData: FormData) => {
+export const RegisterAction = async (redirectTo: string, previousState: RegisterState, formData: FormData) => {
     const name = formData.get("name");
     const email = formData.get("email");
     const password = formData.get("password");
@@ -96,7 +96,6 @@ export const RegisterAction = async (redirectTo: string, previousState: LoginSta
     const result = await res.json();
 
     if (result.success)
-        // toast("Regstration successful. Login now to access the endless possibilities");
         redirect("/login?registration=success");
 
     return result;

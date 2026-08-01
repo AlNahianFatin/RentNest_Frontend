@@ -19,7 +19,7 @@ import type { NavbarProps } from "@/lib/types";
 
 const navItems = [
   { label: "Home", href: "/" },
-  { label: "Rentals", href: "/rentals" },
+  { label: "Properties", href: "/properties" },
 ];
 
 const userMenuItems = [

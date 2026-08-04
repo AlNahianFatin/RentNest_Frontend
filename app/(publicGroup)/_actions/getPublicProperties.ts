@@ -5,9 +5,8 @@
 export const getPublicProperties = async ({ query }: { query?: { [key: string]: string | string[] | undefined } }) => {
     const params = new URLSearchParams()
 
-    if (query && query.searchTerm) {
-        params.set("search", query.searchTerm as string)
-    }
+    if (query && query.searchTerm)
+        params.set("search", query.searchTerm as string);
 
     // const cookieStore = await cookies();
 

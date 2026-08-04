@@ -129,9 +129,9 @@ export type IProperty = {
 //     meta?: {
 //         page?: number,
 //         limit?: number,
-//         totalAvailablePropertyCount: number,
+//         totalAvailablePropertyCount?: number,
 //         totalRentedPropertyCount?: number,
-//         totalPropertyCount?: number,
+//         totalPropertyCount: number,
 //         totalPageCount?: number
 //     }
 // }

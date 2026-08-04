@@ -1,22 +1,23 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { getPublicPropertyById } from "../../_actions/getPublicPropertyById";
+import { getPropertyById } from "../../_actions/propertiesActions";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { CircleCheck, CircleX, MessageSquareIcon, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { IReview } from "@/lib/types";
-import RentNowButton from "@/components/shared/RentNowButton";
+import RentNowButton from "@/components/shared/RentNowButton"
 
-export default async function PublicPropertyDetails({
+export default async function AllPropertiesDetails({
     params,
 }: {
     params: Promise<{ id: string }>;
 }) {
     const { id } = await params;
 
-    const result = await getPublicPropertyById(id); 
+    const result = await getPropertyById(id);
+    console.log(result);
 
-    const property = result.data; console.log(property)
+    const property = result.data;
 
     return (
         <div className="max-w-6xl mx-auto py-10 px-4">
@@ -52,7 +53,7 @@ export default async function PublicPropertyDetails({
                         )}
 
                         <Badge>
-                            {property.type.propertyType ?? "Unknown"}
+                            {property.type.propertyType}
                         </Badge>
 
                     </div>
@@ -77,7 +78,7 @@ export default async function PublicPropertyDetails({
                         <div className="flex items-center gap-2">
                             <MessageSquareIcon className="w-5 h-5" />
                             <span>
-                                {property.reviews.length ?? 0} Reviews
+                                {property.reviews.length} Reviews
                             </span>
                         </div>
 
@@ -88,7 +89,6 @@ export default async function PublicPropertyDetails({
                             // <Button
                             //     size="lg"
                             //     className="w-full sm:w-auto"
-                            //     onClick={handleRentNow} id={property.id}
                             // >
                             //     Rent Now
                             // </Button>
@@ -142,7 +142,7 @@ export default async function PublicPropertyDetails({
                                 Landlord
                             </h3>
 
-                            <p>{property.landlord.name ?? "Unknown"}</p>
+                            <p>{property.landlord.name}</p>
                         </div>
 
                         <div>
@@ -160,7 +160,7 @@ export default async function PublicPropertyDetails({
                     <div>
 
                         <h2 className="text-2xl font-semibold mb-5">
-                            Reviews ({Number(property.reviews.length)})
+                            Reviews ({property.reviews.length})
                         </h2>
 
                         {property.reviews.length === 0 ? (

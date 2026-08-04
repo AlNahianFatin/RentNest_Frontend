@@ -9,7 +9,7 @@ import { ICategory } from "@/lib/types";
 import { PencilIcon, PlusIcon } from "lucide-react";
 import { useActionState, useEffect, useState } from "react";
 import { toast } from "sonner";
-import { createCategory, updateCategory } from "../_actions/categoriesActions";
+import { createCategory, updateCategory } from "../../_actions/categoriesActions";
 
 type CategoryFormDialogProps = {
     mode: "create" | "edit";

@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { PropertiesSkeleton } from "../_components/properties/PropertiesSkeleton";
 import { PublicPropertiesList } from "../_components/properties/PublicPropertiesList";
-import { PropertySearchBar } from "../_components/properties/PropertySearchBar";
+import { PropertySearchBar } from "../../../components/shared/PropertySearchBar";
 
 const PropertiesPage = () => {
   return (

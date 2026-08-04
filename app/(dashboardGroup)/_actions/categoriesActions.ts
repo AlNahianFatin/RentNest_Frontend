@@ -60,14 +60,14 @@ export const createCategory = async (prevState: CategoryState, formData: FormDat
     return result;
 }
 
-export const updateCategory = async (categoryId: string, prevState: CategoryState, formData: FormData) => {
+export const updateCategory = async (id: string, prevState: CategoryState, formData: FormData) => {
     const accessToken = await isAccessTokenExist();
 
     const payload = {
         propertyType: formData.get("propertyType")
     };
 
-    const res = await fetch(`${process.env.BACKEND_API_URL}/api/admin/categories/${categoryId}`, {
+    const res = await fetch(`${process.env.BACKEND_API_URL}/api/admin/categories/${id}`, {
         method: "PATCH",
         headers: {
             Cookie: `accessToken=${accessToken}`,

@@ -1,7 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ICategory } from "@/lib/types";
-import { CategoryFormDialog } from "./CategoryFormDialog";
+import { CategoryFormDialog } from "../../_components/categories/CategoryFormDialog";
 
 type CategoryCardProps = {
     category: ICategory;

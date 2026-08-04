@@ -1,7 +1,7 @@
 import { Suspense } from "react";
-import { CategoriesList } from "../../_components/CategoriesList";
-import { CategoriesSkeleton } from "../../_components/CategoriesSkeleton";
-import { CategoryFormDialog } from "../../_components/CategoryFormDialog";
+import { CategoriesList } from "../../_components/categories/CategoriesList";
+import { CategoriesSkeleton } from "../../_components/categories/CategoriesSkeleton";
+import { CategoryFormDialog } from "../../_components/categories/CategoryFormDialog";
 
 const CategoriesPage = () => {
   return (

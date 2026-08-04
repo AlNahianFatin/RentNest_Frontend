@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ICategory } from "@/lib/types";
 import { CategoriesCard } from "./CategoriesCard";
-import { getCategories } from "../_actions/categoriesActions";
+import { getCategories } from "../../_actions/categoriesActions";
 
 export async function CategoriesList() {
     const result = await getCategories();

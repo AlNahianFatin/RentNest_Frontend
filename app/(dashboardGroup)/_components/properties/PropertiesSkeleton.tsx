@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 
-export function AllPropertiesSkeleton() {
+export function PropertiesSkeleton() {
     return (
         <div className="space-y-8">
 

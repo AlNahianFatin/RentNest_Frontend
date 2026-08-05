@@ -9,6 +9,7 @@ import { IUpdatePassword } from "@/lib/types";
 import { useActionState, useEffect } from "react";
 import { toast } from "sonner";
 import { updatePassword } from "../../_actions/updatePasswordActions";
+import { useRouter } from "next/navigation";
 
 type UpdatePasswordFormDialogProps = {
     user: IUpdatePassword;
@@ -20,22 +21,22 @@ export function UpdatePasswordFormDialog({
     open,
     setOpen,
 }: UpdatePasswordFormDialogProps) {
+    const router = useRouter();
 
-    const action = updatePassword.bind(null);
-
-    const [state, formAction, pending] =
-        useActionState(action, null) as any;
+    const [state, formAction, pending] = useActionState(updatePassword, null);
 
     useEffect(() => {
-        if (!state) return;
+        if (!state || pending)
+            return;
 
         if (state.success) {
             toast.success(state.message);
+            router.refresh();
             setOpen(false);
         } else {
             toast.error(state.message);
         }
-    }, [state, setOpen]);
+    }, [state, setOpen, router, pending]);
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>

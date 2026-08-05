@@ -34,7 +34,6 @@ const userMenuItems = [
 export function Navbar({ user }: NavbarProps) {
   const [profileOpen, setProfileOpen] = useState(false);
   const [updatePasswordOpen, setUpdatePasswordOpen] = useState(false);
-  // const [profile, setProfile] = useState<IProfile | null>(null);
 
   const router = useRouter()
   const handleUserMenuAction = async (action: string) => {
@@ -47,7 +46,7 @@ export function Navbar({ user }: NavbarProps) {
       else if (user.data.role === UserRole.ADMIN)
         router.push("/admin-dashboard");
       else
-        toast("Oops! Something went wrong");
+        toast.error("Oops! Something went wrong");
 
       return;
     }
@@ -130,13 +129,7 @@ export function Navbar({ user }: NavbarProps) {
                       );
                     })}
                     <DropdownMenuSeparator />
-                    {/* {profile && (
-                    <ProfileFormDialog
-                      profile={profile}
-                      open={profileOpen}
-                      setOpen={setProfileOpen}
-                    />
-                  )} */}
+
                     <DropdownMenuItem onClick={async () => {
                       await handleUserMenuAction("logout");
                     }}>
@@ -152,7 +145,6 @@ export function Navbar({ user }: NavbarProps) {
                   profile={{
                     id: user.data.id,
                     name: user.data.name,
-                    // email: user.data.email,
                   }} />
 
                 <UpdatePasswordFormDialog

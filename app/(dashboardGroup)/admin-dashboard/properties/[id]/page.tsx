@@ -1,6 +1,6 @@
 import { Suspense } from "react";
-import { AllPropertySkeleton } from "../../../_components/properties/AllPropertySkeleton";
-import AllPropertyDetails from "../../../_components/properties/AllPropertyDetails";
+import { PropertySkeleton } from "../../../_components/properties/PropertySkeleton";
+import PropertyDetails from "../../../_components/properties/PropertyDetails";
 
 type Props = {
     params: Promise<{ id: string }>;
@@ -8,8 +8,8 @@ type Props = {
 
 export default function PropertyDetailsPage({ params }: Props) {
     return (
-        <Suspense fallback={<AllPropertySkeleton />}>
-            <AllPropertyDetails params={params} />
+        <Suspense fallback={<PropertySkeleton />}>
+            <PropertyDetails params={params} />
         </Suspense>
     );
 }

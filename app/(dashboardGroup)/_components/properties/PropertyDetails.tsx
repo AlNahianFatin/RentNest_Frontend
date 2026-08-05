@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { IReview } from "@/lib/types";
 import RentNowButton from "@/components/shared/RentNowButton"
 
-export default async function AllPropertiesDetails({
+export default async function PropertiesDetails({
     params,
 }: {
     params: Promise<{ id: string }>;

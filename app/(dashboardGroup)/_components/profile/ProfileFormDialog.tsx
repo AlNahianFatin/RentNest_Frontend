@@ -30,7 +30,8 @@ export function ProfileFormDialog({
         useActionState(action, null) as any;
 
     useEffect(() => {
-        if (!state) return;
+        if (!state || pending) 
+            return;
 
         if (state.success) {
             toast.success(state.message);
@@ -39,7 +40,7 @@ export function ProfileFormDialog({
         } else {
             toast.error(state.message);
         }
-    }, [state, setOpen, router]);
+    }, [state, setOpen, router, pending]);
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>
@@ -59,16 +60,6 @@ export function ProfileFormDialog({
                             required
                         />
                     </div>
-
-                    {/* <div className="space-y-2">
-                        <Label htmlFor="email">Email</Label>
-                        <Input
-                            id="email"
-                            name="email"
-                            defaultValue={profile.email}
-                            required
-                        />
-                    </div> */}
 
                     <div className="space-y-2">
                         <Label htmlFor="password">

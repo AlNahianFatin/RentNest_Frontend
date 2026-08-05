@@ -1,18 +1,18 @@
-import { AllPropertyCard } from "./AllPropertyCard";
+import { PropertyCard } from "./PropertyCard";
 import { IProperty } from "@/lib/types";
-import { getAllProperties } from "../../_actions/propertiesActions";
+import { getMyProperties } from "../../_actions/propertiesActions";
 import { Building2, CheckCircle2, Home } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-export async function AllPropertiesList({
+export async function MyPropertiesList({
     searchParams,
 }: {
     searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
     const query = await searchParams;
-    const result = await getAllProperties({ query });
+    const result = await getMyProperties({ query });
 
     if (!result.success || !result.data?.length) {
         return (
@@ -83,7 +83,7 @@ export async function AllPropertiesList({
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
 
                 {result.data.map((property: IProperty | any) => (
-                    <AllPropertyCard
+                    <PropertyCard
                         key={property.id}
                         property={property}
                     />

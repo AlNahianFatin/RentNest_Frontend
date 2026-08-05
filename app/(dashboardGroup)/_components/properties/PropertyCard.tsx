@@ -9,7 +9,7 @@ type PropertyCardProps = {
     property: IProperty
 }
 
-export function AllPropertyCard({ property }: PropertyCardProps) {
+export function PropertyCard({ property }: PropertyCardProps) {
     const reviewCount = property.reviews?.length ?? 0;
 
     return (

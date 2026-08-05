@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 
-export function AllPropertySkeleton() {
+export function PropertySkeleton() {
     return (
         <div className="max-w-6xl mx-auto py-10 px-4">
             <Card>

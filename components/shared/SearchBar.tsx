@@ -5,7 +5,11 @@ import { SearchIcon } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useRef } from "react";
 
-export function PropertySearchBar() {
+type SearchBarProps = {
+    text: string;
+};
+
+export function SearchBar({ text }: SearchBarProps) {
     const pathname = usePathname()
     const searchParams = useSearchParams()
     const router = useRouter()
@@ -13,9 +17,8 @@ export function PropertySearchBar() {
     const debouncedReference = useRef<ReturnType<typeof setTimeout> | null>(null)
 
     const handleChange = (value: string) => {
-        if (debouncedReference.current) {
+        if (debouncedReference.current)
             clearTimeout(debouncedReference.current)
-        }
 
 
         debouncedReference.current = setTimeout(() => {
@@ -23,11 +26,10 @@ export function PropertySearchBar() {
 
             const params = new URLSearchParams();
 
-            if (value) {
+            if (value)
                 params.set("searchTerm", value);
-            } else {
+            else
                 params.delete("searchTerm");
-            }
 
             router.replace(`${pathname}?${params.toString()}`);
         }, 500)
@@ -40,7 +42,7 @@ export function PropertySearchBar() {
             <Input
                 defaultValue={searchParams.get("searchTerm") ? searchParams.get("searchTerm")?.toString() : ""}
                 onChange={(e) => handleChange(e.target.value)}
-                placeholder="Search property..."
+                placeholder={text}
                 className="pl-9"
             />
         </div>

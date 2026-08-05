@@ -35,8 +35,9 @@ export enum RentalStatus {
 }
 
 export enum RequestStatus {
-    APPROVED = "APPROVED",
-    REJECTED = "REJECTED"
+    ACCEPTED = "ACCEPTED",
+    REJECTED = "REJECTED",
+    PENDING = "PENDING"
 }
 
 type IRentalRequest = {
@@ -47,7 +48,10 @@ type IRentalRequest = {
     tenantId: string,
     landlordId: string,
     propertyId: string,
-    property: IProperty
+    property: IProperty,
+    landlord: IUser,
+    tenant?: IUser,
+    payment?: IPayment
 }
 
 type IPayment = {

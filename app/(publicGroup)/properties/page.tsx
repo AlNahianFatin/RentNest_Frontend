@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { PropertiesSkeleton } from "../_components/properties/PropertiesSkeleton";
 import { PublicPropertiesList } from "../_components/properties/PublicPropertiesList";
-import { PropertySearchBar } from "../../../components/shared/PropertySearchBar";
+import { SearchBar } from "../../../components/shared/SearchBar";
 
 const PropertiesPage = () => {
   return (
@@ -14,7 +14,7 @@ const PropertiesPage = () => {
           </p>
         </div>
 
-        <PropertySearchBar/>
+        <SearchBar text={"Search properties..."} />
       </div>
 
       <Suspense fallback={<PropertiesSkeleton />}>

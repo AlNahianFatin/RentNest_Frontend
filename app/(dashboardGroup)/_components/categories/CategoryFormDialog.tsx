@@ -26,16 +26,15 @@ export function CategoryFormDialog({ mode, category }: CategoryFormDialogProps) 
     const [state, formAction, pending] = useActionState(action, null) as any;
 
     useEffect(() => {
-        if (!state) 
+        if (!state)
             return;
 
         if (state.success) {
             toast.success(state.message || (mode === "edit" ? "Category updated successfully" : "Category created successfully"));
             // eslint-disable-next-line react-hooks/set-state-in-effect -- closing the dialog is the intended reaction to the server action's result, not a render loop
             setOpen(false);
-        } else {
+        } else
             toast.error(state.message || "Something went wrong");
-        }
     }, [state, mode]);
 
     return (

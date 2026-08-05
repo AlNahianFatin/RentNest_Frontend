@@ -48,15 +48,6 @@ export const createCategory = async (prevState: CategoryState, formData: FormDat
             expire: 0
         });
 
-    // if (result.success && result.data.isPremium)
-    //     revalidateTag("premium-posts", {
-    //         expire: 0
-    //     });
-    // else
-    //     revalidateTag("public-posts", {
-    //         expire: 0
-    //     });
-
     return result;
 }
 

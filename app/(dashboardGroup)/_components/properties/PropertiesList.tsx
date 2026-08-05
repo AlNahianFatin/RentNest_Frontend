@@ -1,8 +1,9 @@
 import { PropertyCard } from "./PropertyCard";
-import { IProperty } from "@/lib/types";
+import { IProperty, UserRole } from "@/lib/types";
 import { getAllProperties } from "../../_actions/propertiesActions";
 import { Building2, CheckCircle2, Home } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
+import { getCategories } from "../../_actions/categoriesActions";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -12,9 +13,9 @@ export async function PropertiesList({
     searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
     const query = await searchParams;
-    const result = await getAllProperties({ query });
+    const properties = await getAllProperties({ query });
 
-    if (!result.success || !result.data?.length) {
+    if (!properties.success || !properties.data?.length) {
         return (
             <p className="py-12 text-center text-muted-foreground">
                 No available property found at the moment!
@@ -22,22 +23,27 @@ export async function PropertiesList({
         );
     }
 
+    const categories = await getCategories();
+
+    if (!categories.success || !categories.data?.length) 
+        return;
+
     const stats = [
         {
             title: "Available Properties",
-            value: result.meta.totalAvailablePropertyCount,
+            value: properties.meta.totalAvailablePropertyCount,
             icon: CheckCircle2,
             description: "Currently available for rent",
         },
         {
             title: "Rented Properties",
-            value: result.meta.totalRentedPropertyCount,
+            value: properties.meta.totalRentedPropertyCount,
             icon: Home,
             description: "Already occupied properties",
         },
         {
             title: "Total Properties",
-            value: result.meta.totalPropertyCount,
+            value: properties.meta.totalPropertyCount,
             icon: Building2,
             description: "Total properties listed",
         },
@@ -82,10 +88,13 @@ export async function PropertiesList({
 
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
 
-                {result.data.map((property: IProperty | any) => (
+                {properties.data.map((property: IProperty | any) => (
                     <PropertyCard
                         key={property.id}
                         property={property}
+                        categories={categories.data}
+                        role={UserRole.ADMIN}
+                        // showLandlord={true}
                     />
                 ))}
 

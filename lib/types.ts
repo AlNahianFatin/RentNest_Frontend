@@ -50,7 +50,7 @@ type IRentalRequest = {
     propertyId: string,
     property: IProperty,
     landlord: IUser,
-    tenant?: IUser,
+    tenant: IUser,
     payment?: IPayment
 }
 
@@ -112,6 +112,7 @@ export type IProperty = {
     location: string,
     thumbnail: string,
     price: number,
+    type: ICategory,
     status: PropertyStatus,
     averageRating: number,
     createdAt: string,
@@ -122,7 +123,7 @@ export type IProperty = {
     categoryId: string,
     landlord: IUser,
     reviews: IReview[],
-    type: ICategory
+    rentalRequests: IRentalRequest[]
 }
 
 // type IPropertyResponse = {

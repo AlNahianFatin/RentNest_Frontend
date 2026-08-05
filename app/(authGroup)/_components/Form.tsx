@@ -34,6 +34,7 @@ const Form = ({ mode }: Props) => {
             : RegisterAction.bind(null, redirectTo);
 
     const [state, action, pending] = useActionState(serverAction, null);
+    const [role, setRole] = useState("TENANT");
 
     useEffect(() => {
         if (!state)
@@ -65,8 +66,6 @@ const Form = ({ mode }: Props) => {
             );
         }
     }, [searchParams, pathname, router]);
-
-    const [role, setRole] = useState("TENANT");
 
     return (
         <form action={action} className="space-y-4">

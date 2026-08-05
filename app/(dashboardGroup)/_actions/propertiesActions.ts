@@ -1,6 +1,7 @@
 "use server"
 
 import { isAccessTokenExist } from "@/service/refreshToken";
+import { revalidateTag } from "next/cache";
 
 // for admins
 export const getAllProperties = async ({ query }: { query?: { [key: string]: string | string[] | undefined } }) => {
@@ -62,6 +63,84 @@ export const getMyProperties = async ({ query }: { query?: { [key: string]: stri
     });
 
     const result = await res.json();
+
+    return result;
+}
+
+type PropertyState = {
+    success: boolean;
+    statusCode: number;
+    message: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    data: Record<string, any>;
+}
+
+export const createProperty = async (prevState: PropertyState, formData: FormData) => {
+    const accessToken = await isAccessTokenExist();
+
+    const payload = {
+        houseNo: Number(formData.get("houseNo")),
+        roadNo: Number(formData.get("roadNo")),
+        location: formData.get("location"),
+        thumbnail: formData.get("thumbnail"),
+        price: Number(formData.get("price")),
+        categoryId: formData.get("categoryId"),
+    };
+
+    const res = await fetch(`${process.env.BACKEND_API_URL}/api/landlord/properties`, {
+        method: "post",
+        headers: {
+            Cookie: `accessToken=${accessToken}`,
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+    });
+
+    const result = await res.json();
+
+    if (result.success) {
+        revalidateTag("properties", {
+            expire: 0
+        });
+        revalidateTag("my-properties", {
+            expire: 0
+        });
+    }
+
+    return result;
+}
+
+export const updateProperty = async (id: string, prevState: PropertyState, formData: FormData) => {
+    const accessToken = await isAccessTokenExist();
+
+    const payload = {
+        houseNo: Number(formData.get("houseNo")),
+        roadNo: Number(formData.get("roadNo")),
+        location: formData.get("location"),
+        thumbnail: formData.get("thumbnail"),
+        price: Number(formData.get("price")),
+        categoryId: formData.get("categoryId"),
+    };
+
+    const res = await fetch(`${process.env.BACKEND_API_URL}/api/landlord/properties/${id}`, {
+        method: "put",
+        headers: {
+            Cookie: `accessToken=${accessToken}`,
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+    });
+
+    const result = await res.json();
+
+    if (result.success) {
+        revalidateTag("properties", {
+            expire: 0
+        });
+        revalidateTag("my-properties", {
+            expire: 0
+        });
+    }
 
     return result;
 }

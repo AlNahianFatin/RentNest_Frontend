@@ -15,7 +15,6 @@ export function CategoriesCard({ category }: CategoryCardProps) {
             <CardHeader>
                 <div className="flex flex-wrap items-center gap-1.5">
                     <Badge>{propertyCount} Properties</Badge>
-
                 </div>
                 <CardTitle className="text-lg">{category.propertyType}</CardTitle>
                 <CardAction>

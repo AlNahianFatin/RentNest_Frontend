@@ -18,14 +18,14 @@ export const getMe = async () => {
         headers: {
             Cookie: `accessToken=${accessToken}`
         },
-        cache: "force-cache",
-        next: {
-            revalidate: 60 * 60 * 24,
-            tags: ["my-profile"]
-        }
+        cache: "no-store"
+        // next: {
+        //     revalidate: 60 * 60 * 24,
+        //     tags: ["my-profile"]
+        // }
     });
 
-    const result = res.json();
+    const result = await res.json();
 
     return result;
 }

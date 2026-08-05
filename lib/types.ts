@@ -160,3 +160,16 @@ export type ISidebarItem = {
     href: string,
     icon: ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>
 }
+
+export type IProfile = {
+    id: string,
+    name: string,
+    // email: string,
+    password?: string,
+}
+
+export type IUpdatePassword = {
+    id: string,
+    newPassword?: string,
+    oldPassword?: string,
+}

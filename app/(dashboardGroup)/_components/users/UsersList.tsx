@@ -1,5 +1,5 @@
 import { getUsers } from "../../_actions/usersActions";
-import { BanknoteArrowDown, BanknoteCheck, BanknoteX, ScrollText } from "lucide-react";
+import { User, UserRoundCheck, UserRoundX, UserShield, UsersRound, UserStar } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { UserActiveStatus, UserRole } from "@/lib/types";
@@ -28,37 +28,37 @@ export async function UsersList({
         {
             title: "Admins",
             value: result.meta.totalAdminCount,
-            icon: BanknoteArrowDown,
+            icon: UserShield,
             description: "Number of admins",
         },
         {
             title: "Landlords",
             value: result.meta.totalLandlordCount,
-            icon: BanknoteArrowDown,
+            icon: UserStar,
             description: "Number of landlords",
         },
         {
             title: "Tenants",
             value: result.meta.totalTenantCount,
-            icon: BanknoteArrowDown,
+            icon: User,
             description: "Number of tenants",
         },
         {
             title: "Active Users",
             value: result.meta.totalActiveUsersCount,
-            icon: BanknoteCheck,
+            icon: UserRoundCheck,
             description: "Number of active users",
         },
         {
             title: "Banned Users",
             value: result.meta.totalBannedUsersCount,
-            icon: BanknoteX,
+            icon: UserRoundX,
             description: "Number of banned users",
         },
         {
             title: "Users",
             value: result.meta.totalUsersCount,
-            icon: ScrollText,
+            icon: UsersRound,
             description: "Number of total users",
         },
     ];

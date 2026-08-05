@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import { RentalRequestsSkeleton } from "../../_components/rentalRequests/RentalRequestsSkeleton";
+import { UsersSkeleton } from "../../_components/users/UsersSkeleton";
 import { UsersList } from "../../_components/users/UsersList";
 
 const UsersPage = () => {
@@ -12,7 +12,7 @@ const UsersPage = () => {
 
             </div>
 
-            <Suspense fallback={<RentalRequestsSkeleton />}>
+            <Suspense fallback={<UsersSkeleton />}>
                 <UsersList />
             </Suspense>
         </div>

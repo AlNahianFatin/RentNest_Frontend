@@ -1,79 +1,185 @@
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export function UsersSkeleton() {
     return (
-        <div className="max-w-6xl mx-auto py-10 px-4">
+        <div className="space-y-6">
+
+            {/* Stats Skeleton */}
+            <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
+
+                {Array.from({ length: 6 }).map((_, index) => (
+                    <Card key={index}>
+                        <CardContent className="flex items-center gap-4 p-8">
+
+                            <Skeleton className="h-10 w-8 rounded-full" />
+
+                            <div className="space-y-2">
+
+                                <Skeleton className="h-3 w-24" />
+
+                                <Skeleton className="h-6 w-10" />
+
+                            </div>
+
+                        </CardContent>
+                    </Card>
+                ))}
+
+            </div>
+
+
+            {/* Table Skeleton */}
             <Card>
 
-                {/* Image */}
-                <Skeleton className="w-full h-112.5 rounded-t-xl" />
+                <CardContent className="p-0">
 
-                <CardHeader className="space-y-5">
+                    <div className="w-full overflow-x-auto">
 
-                    {/* Badges */}
-                    <div className="flex gap-2">
-                        <Skeleton className="h-7 w-24 rounded-full" />
-                        <Skeleton className="h-7 w-24 rounded-full" />
-                    </div>
+                        <table className="w-full min-w-250 text-sm">
 
-                    {/* Title */}
-                    <Skeleton className="h-10 w-72" />
+                            {/* Header */}
+                            <thead className="border-b bg-muted/50">
 
-                    {/* Rating */}
-                    <div className="flex gap-8">
-                        <Skeleton className="h-6 w-28" />
-                        <Skeleton className="h-6 w-32" />
-                    </div>
+                                <tr>
 
-                    {/* Button */}
-                    <Skeleton className="h-11 w-40 rounded-md" />
+                                    {[
+                                        "Property",
+                                        "Landlord",
+                                        "Tenant",
+                                        "Request",
+                                        "Payment",
+                                        "Rental",
+                                        "Requested On",
+                                        "Rental Expires",
+                                    ].map((item) => (
+                                        <th
+                                            key={item}
+                                            className="px-4 py-3 text-left"
+                                        >
+                                            <Skeleton className="h-4 w-20" />
+                                        </th>
+                                    ))}
 
-                </CardHeader>
+                                </tr>
 
-                <CardContent className="space-y-8">
+                            </thead>
 
-                    {/* Property Info */}
-                    <div className="grid grid-cols-2 gap-6">
-                        {Array.from({ length: 5 }).map((_, i) => (
-                            <div key={i} className="space-y-2">
-                                <Skeleton className="h-5 w-24" />
-                                <Skeleton className="h-5 w-40" />
-                            </div>
-                        ))}
-                    </div>
 
-                    <Skeleton className="h-px w-full" />
+                            <tbody>
 
-                    {/* Reviews */}
-                    <div className="space-y-5">
+                                {Array.from({ length: 5 }).map((_, index) => (
 
-                        <Skeleton className="h-8 w-52" />
+                                    <tr
+                                        key={index}
+                                        className="border-b"
+                                    >
 
-                        {Array.from({ length: 3 }).map((_, i) => (
-                            <Card key={i}>
-                                <CardContent className="pt-5 space-y-4">
+                                        {/* Property */}
+                                        <td className="px-4 py-4">
 
-                                    <div className="flex justify-between">
-                                        <div className="space-y-2">
-                                            <Skeleton className="h-5 w-32" />
-                                            <Skeleton className="h-4 w-48" />
-                                        </div>
+                                            <div className="flex items-center gap-3">
 
-                                        <Skeleton className="h-7 w-16 rounded-full" />
-                                    </div>
+                                                <Skeleton className="h-12 w-12 rounded-md" />
 
-                                    <Skeleton className="h-4 w-full" />
-                                    <Skeleton className="h-4 w-4/5" />
+                                                <div className="space-y-2">
 
-                                </CardContent>
-                            </Card>
-                        ))}
+                                                    <Skeleton className="h-4 w-32" />
+
+                                                    <Skeleton className="h-3 w-40" />
+
+                                                    <Skeleton className="h-4 w-20" />
+
+                                                </div>
+
+                                            </div>
+
+                                        </td>
+
+
+                                        {/* Landlord */}
+                                        <td className="px-4 py-4">
+
+                                            <div className="space-y-2">
+
+                                                <Skeleton className="h-4 w-28" />
+
+                                                <Skeleton className="h-3 w-36" />
+
+                                            </div>
+
+                                        </td>
+
+
+                                        {/* Tenant */}
+                                        <td className="px-4 py-4">
+
+                                            <div className="space-y-2">
+
+                                                <Skeleton className="h-4 w-28" />
+
+                                                <Skeleton className="h-3 w-36" />
+
+                                            </div>
+
+                                        </td>
+
+
+                                        {/* Request Badge */}
+                                        <td className="px-4 py-4">
+
+                                            <Skeleton className="h-6 w-20 rounded-full" />
+
+                                        </td>
+
+
+                                        {/* Payment Badge */}
+                                        <td className="px-4 py-4">
+
+                                            <Skeleton className="h-6 w-20 rounded-full" />
+
+                                        </td>
+
+
+                                        {/* Rental Badge */}
+                                        <td className="px-4 py-4">
+
+                                            <Skeleton className="h-6 w-20 rounded-full" />
+
+                                        </td>
+
+
+                                        {/* Requested Date */}
+                                        <td className="px-4 py-4">
+
+                                            <Skeleton className="h-4 w-24" />
+
+                                        </td>
+
+
+                                        {/* Expiry Date */}
+                                        <td className="px-4 py-4">
+
+                                            <Skeleton className="h-4 w-24" />
+
+                                        </td>
+
+
+                                    </tr>
+
+                                ))}
+
+
+                            </tbody>
+
+                        </table>
 
                     </div>
 
                 </CardContent>
+
             </Card>
+
         </div>
     );
 }

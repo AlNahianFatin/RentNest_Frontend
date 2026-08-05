@@ -14,8 +14,6 @@ export default function RentNowButton({
     const router = useRouter();
 
     const handleRentNow = async () => {
-
-        // check access token from browser cookies
         const accessToken = document.cookie
             .split("; ")
             .some(cookie => cookie.startsWith("accessToken="));

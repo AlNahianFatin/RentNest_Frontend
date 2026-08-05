@@ -68,11 +68,11 @@ type IPayment = {
     rentalRequest: IRentalRequest
 }
 
-type IUser = {
+export type IUser = {
     id: string,
     name: string,
     email: string,
-    activeStatus: UserActiveStatus,
+    status: UserActiveStatus,
     role: UserRole,
     createdAt: string,
     updatedAt: string,

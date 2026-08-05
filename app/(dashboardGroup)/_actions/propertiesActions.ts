@@ -14,7 +14,11 @@ export const getAllProperties = async ({ query }: { query?: { [key: string]: str
         headers: {
             Cookie: `accessToken=${accessToken}`
         },
-        cache: "no-cache"
+        cache: "no-cache",
+        next: {
+            revalidate: 60 * 60 * 6,
+            tags: ["properties"]
+        }
     });
 
     const result = await res.json();

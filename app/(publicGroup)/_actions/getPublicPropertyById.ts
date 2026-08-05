@@ -5,7 +5,7 @@ export const getPublicPropertyById = async (id: string) => {
         cache: "no-cache",
         next: {
             revalidate: 60 * 60 * 6,
-            tags: ["public-propertyById"]
+            tags: ["propertyById"]
         }
     });
 

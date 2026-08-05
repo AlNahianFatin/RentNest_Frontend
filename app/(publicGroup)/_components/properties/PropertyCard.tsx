@@ -70,10 +70,6 @@ export function PropertyCard({ property }: PropertiesCardProps) {
                             {new Date(property.createdAt).toLocaleDateString()}
                         </span>
 
-                        {/* <span className="flex items-center gap-1">
-                            <MessageSquareIcon className="size-3.5" />
-                            {reviewCount}
-                        </span> */}
                         <div className="flex items-center gap-3 text-xs text-muted-foreground">
 
                             <span className="flex items-center gap-1">

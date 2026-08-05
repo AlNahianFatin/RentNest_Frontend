@@ -26,7 +26,7 @@ export const getPublicProperties = async ({ query }: { query?: { [key: string]: 
         cache: "no-cache",
         next: {
             revalidate: 60 * 60 * 6,
-            tags: ["public-properties"]
+            tags: ["properties"]
         }
     });
 

@@ -14,7 +14,7 @@ export default async function PublicPropertyDetails({
 }) {
     const { id } = await params;
 
-    const result = await getPublicPropertyById(id); 
+    const result = await getPublicPropertyById(id);
 
     const property = result.data; console.log(property)
 
@@ -61,10 +61,6 @@ export default async function PublicPropertyDetails({
                         {property.location}
                     </h1>
 
-                    {/* <p className="text-2xl font-semibold text-primary">
-                            ৳ {property.price} / month
-                        </p> */}
-
                     <div className="flex items-center gap-6 text-muted-foreground">
 
                         <div className="flex items-center gap-2">
@@ -85,13 +81,6 @@ export default async function PublicPropertyDetails({
 
                     <div className="flex gap-3 pt-2">
                         {property.status === "AVAILABLE" ? (
-                            // <Button
-                            //     size="lg"
-                            //     className="w-full sm:w-auto"
-                            //     onClick={handleRentNow} id={property.id}
-                            // >
-                            //     Rent Now
-                            // </Button>
                             <RentNowButton propertyId={property.id} />
                         ) : (
                             <Button

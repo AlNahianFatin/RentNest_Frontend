@@ -1,0 +1,211 @@
+import { getMyRentals } from "../../_actions/rentalsActions";
+import { Banknote, MapPinHouse } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+import Image from "next/image";
+import { Badge } from "@/components/ui/badge";
+import { PaymentStatus, RentalStatus } from "@/lib/types";
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+export async function MyRentalsList({
+    searchParams,
+}: {
+    searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+    const query = await searchParams;
+
+    const rental = await getMyRentals({ query });
+
+    if (!rental.success || !rental.data?.length) {
+        return (
+            <p className="py-12 text-center text-muted-foreground">
+                No renal record found at the moment!
+            </p>
+        );
+    }
+
+    const totalRent = rental.meta.totalRent._sum.price ?? 0;
+
+    const stats = [
+        {
+            title: "Monthly Rent",
+            value: `৳  ${totalRent}`,
+            icon: Banknote,
+            description: "Monthly rent receiving",
+        },
+        {
+            title: "Rentals",
+            value: rental.meta.totalRentalCount,
+            icon: MapPinHouse,
+            description: "Rented properties",
+        }
+    ];
+
+    return (
+        <div className="space-y-6">
+
+            <div className="grid grid-cols-2 gap-50 md:grid-cols-2">
+
+                {stats.map((stat) => {
+                    const Icon = stat.icon;
+
+                    return (
+                        <Card key={stat.title}>
+                            <CardContent className="flex items-center gap-3 p-3">
+
+                                <div className="rounded-full bg-primary/10 p-2 shrink-0">
+                                    <Icon className="h-4 w-4 text-primary" />
+                                </div>
+
+                                <div className="min-w-0">
+
+                                    <p className="truncate text-xs text-muted-foreground">
+                                        {stat.title}
+                                    </p>
+
+                                    <p className="text-xl font-bold leading-none">
+                                        {stat.value}
+                                    </p>
+
+                                </div>
+
+                            </CardContent>
+                        </Card>
+                    );
+                })}
+
+            </div>
+
+
+            <Card>
+                <CardContent className="p-0">
+                    <div className="w-full overflow-x-auto">
+                        <table className="w-full min-w-250 text-sm">
+                            <thead className="border-b bg-muted/50">
+                                <tr>
+
+                                    <th className="px-4 py-3 text-left"> Property </th>
+
+                                    <th className="px-4 py-3 text-left"> Tenant </th>
+
+                                    <th className="px-4 py-3 text-left"> Payment Status </th>
+
+                                    <th className="px-4 py-3 text-left"> Rental Status </th>
+
+                                    <th className="px-4 py-3 text-left"> Rented On </th>
+
+                                    <th className="px-4 py-3 text-left"> Rental Expires </th>
+
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                                {rental.data.map((rental: any) => (
+                                    <tr key={rental.rentalRequest.property?.id} className="border-b hover:bg-muted/40" >
+
+                                        <td className="px-4 py-4">
+
+                                            <div className="flex items-center gap-3">
+                                                <Image
+                                                    src={rental.rentalRequest.property?.thumbnail}
+                                                    alt={rental.rentalRequest.property?.location}
+                                                    width={60}
+                                                    height={60}
+                                                    className="h-22 w-25 rounded-md object-cover"
+                                                    unoptimized
+                                                    loading="eager"
+                                                />
+
+                                                <div className="min-w-45">
+
+                                                    <p className="font-medium"> {rental.rentalRequest.property?.location} </p>
+
+                                                    <p className="text-xs text-muted-foreground">
+                                                        House #{rental.rentalRequest.property?.houseNo}
+                                                        {" • "}
+                                                        Road #{rental.rentalRequest.property?.roadNo}
+                                                    </p>
+
+                                                    <p className="font-semibold">
+                                                        ৳ {rental.rentalRequest.property.price.toLocaleString()}
+                                                    </p>
+
+                                                </div>
+                                            </div>
+
+                                        </td>
+
+                                        {/* <td className="px-4 py-4">
+
+                                            <p className="font-medium whitespace-nowrap"> {rental.landlord.name} </p>
+
+                                            <p className="text-xs text-muted-foreground whitespace-nowrap"> {rental.landlord.email} </p>
+
+                                        </td> */}
+
+                                        <td className="px-4 py-4">
+
+                                            <p className="font-medium whitespace-nowrap"> {rental.rentalRequest.tenant.name} </p>
+
+                                            <p className="text-xs text-muted-foreground whitespace-nowrap"> {rental.rentalRequest.tenant.email} </p>
+
+                                        </td>
+
+                                        <td className="px-4 py-4">
+                                            <Badge
+                                                className={
+                                                    rental.paymentStatus === PaymentStatus.COMPLETED
+                                                        ? "bg-green-200 text-green-900 dark:bg-green-950 dark:text-green-300"
+                                                        : rental.status === PaymentStatus.FAILED
+                                                            ? "bg-red-400 text-red-700 dark:bg-red-950 dark:text-red-300"
+                                                            : "bg-amber-700 text-gray-100 dark:bg-amber-950 dark:text-gray-100"
+                                                }
+                                            >
+                                                {rental.paymentStatus ?? "N/A"}
+                                            </Badge>
+                                        </td>
+
+                                        <td className="px-4 py-4">
+                                            <Badge
+                                                className={
+                                                    rental.rentalStatus === RentalStatus.ACTIVE
+                                                        ? "bg-green-200 text-green-900 dark:bg-green-950 dark:text-green-300"
+                                                        : rental.rentalStatus === RentalStatus.CANCELED
+                                                            ? "bg-red-400 text-red-700 dark:bg-red-950 dark:text-red-300"
+                                                            : "bg-amber-700 text-gray-100 dark:bg-amber-950 dark:text-gray-100"
+                                                }
+                                            >
+                                                {rental.rentalStatus ?? "N/A"}
+                                            </Badge>
+                                        </td>
+
+                                        {rental.updatedAt && (<td className="px-4 py-4 whitespace-nowrap">
+
+                                            {new Date(
+                                                rental.updatedAt
+                                            ).toLocaleDateString()}
+
+                                        </td>)}
+
+                                        {rental.currentPeriodEnd && (<td className="px-4 py-4 whitespace-nowrap">
+
+                                            {new Date(
+                                                rental.currentPeriodEnd
+                                            ).toLocaleDateString()}
+
+                                        </td>)}
+
+                                    </tr>
+                                ))}
+
+                            </tbody>
+
+                        </table>
+                    </div>
+
+                </CardContent>
+            </Card>
+        </div>
+    );
+}

@@ -11,6 +11,7 @@ import { MessageSquareIcon, CircleCheck, CircleX, Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { EditPropertyButton } from "./EditPropertyButton";
+import { DeletePropertyButton } from "./DeletePropertyButton";
 
 
 type PropertyCardProps = {
@@ -28,13 +29,12 @@ export function PropertyCard({
 
     const reviewCount = property.reviews?.length ?? 0;
 
-
     const href =
         role === "ADMIN"
             ? `/admin-dashboard/properties/${property.id}`
             : role === "LANDLORD"
                 ? `/landlord-dashboard/my-properties/${property.id}`
-                : `/properties/${property.id}`;
+                : `/tenant-dashboard/properties/${property.id}`;
 
 
 
@@ -42,8 +42,7 @@ export function PropertyCard({
 
         <Card className="gap-4 cursor-pointer hover:shadow-lg transition-shadow flex flex-col">
 
-            {/* CLICKABLE AREA */}
-            <Link href={href} className="block">
+            <Link href={href} className="block" role={role}>
 
                 <>
                     {
@@ -165,7 +164,6 @@ export function PropertyCard({
 
 
 
-            {/* EDIT BUTTON OUTSIDE LINK */}
             {
                 role === UserRole.LANDLORD && (
                     <div className="flex justify-end px-4 pb-0 pt-2 mt-0">
@@ -173,12 +171,14 @@ export function PropertyCard({
                             property={property}
                             categories={categories}
                         />
+                        <DeletePropertyButton
+                            property={property}
+                        // categories={categories}
+                        />
                     </div>
                 )
             }
 
-
         </Card>
-
     );
 }

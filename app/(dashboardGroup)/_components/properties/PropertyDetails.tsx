@@ -4,18 +4,19 @@ import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { CircleCheck, CircleX, MessageSquareIcon, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { IReview } from "@/lib/types";
+import { IReview, UserRole } from "@/lib/types";
 import RentNowButton from "@/components/shared/RentNowButton"
 
-export default async function PropertiesDetails({
+export default async function PropertyDetails({
     params,
+    role
 }: {
     params: Promise<{ id: string }>;
+    role?: UserRole;
 }) {
     const { id } = await params;
 
     const result = await getPropertyById(id);
-    console.log(result);
 
     const property = result.data;
 
@@ -62,10 +63,6 @@ export default async function PropertiesDetails({
                         {property.location}
                     </h1>
 
-                    {/* <p className="text-2xl font-semibold text-primary">
-                            ৳ {property.price} / month
-                        </p> */}
-
                     <div className="flex items-center gap-6 text-muted-foreground">
 
                         <div className="flex items-center gap-2">
@@ -84,26 +81,25 @@ export default async function PropertiesDetails({
 
                     </div>
 
-                    <div className="flex gap-3 pt-2">
-                        {property.status === "AVAILABLE" ? (
-                            // <Button
-                            //     size="lg"
-                            //     className="w-full sm:w-auto"
-                            // >
-                            //     Rent Now
-                            // </Button>
-                            <RentNowButton propertyId={property.id} />
-                        ) : (
-                            <Button
-                                size="lg"
-                                disabled
-                                variant="secondary"
-                                className="w-full sm:w-auto"
-                            >
-                                Already Rented
-                            </Button>
-                        )}
-                    </div>
+                    {
+                        role !== UserRole.ADMIN &&
+                        role !== UserRole.LANDLORD && (
+                            <div className="flex gap-3 pt-2">
+                                {property.status === "AVAILABLE" ? (
+                                    <RentNowButton propertyId={property.id} />
+                                ) : (
+                                    <Button
+                                        size="lg"
+                                        disabled
+                                        variant="secondary"
+                                        className="w-full sm:w-auto"
+                                    >
+                                        Already Rented
+                                    </Button>
+                                )}
+                            </div>
+                        )
+                    }
 
                 </CardHeader>
 

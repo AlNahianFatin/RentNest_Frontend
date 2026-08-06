@@ -4,13 +4,15 @@ import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { CircleCheck, CircleX, MessageSquareIcon, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { IReview } from "@/lib/types";
+import { IReview, UserRole } from "@/lib/types";
 import RentNowButton from "@/components/shared/RentNowButton";
 
 export default async function PublicPropertyDetails({
     params,
+    role
 }: {
     params: Promise<{ id: string }>;
+    role: UserRole
 }) {
     const { id } = await params;
 
@@ -79,20 +81,24 @@ export default async function PublicPropertyDetails({
 
                     </div>
 
-                    <div className="flex gap-3 pt-2">
-                        {property.status === "AVAILABLE" ? (
-                            <RentNowButton propertyId={property.id} />
-                        ) : (
-                            <Button
-                                size="lg"
-                                disabled
-                                variant="secondary"
-                                className="w-full sm:w-auto"
-                            >
-                                Already Rented
-                            </Button>
-                        )}
-                    </div>
+                    {
+                        role !== UserRole.ADMIN &&
+                        role !== UserRole.LANDLORD && (
+                            <div className="flex gap-3 pt-2">
+                                {property.status === "AVAILABLE" ? (
+                                    <RentNowButton propertyId={property.id} />
+                                ) : (
+                                    <Button
+                                        size="lg"
+                                        disabled
+                                        variant="secondary"
+                                        className="w-full sm:w-auto"
+                                    >
+                                        Already Rented
+                                    </Button>
+                                )}
+                            </div>)
+                    }
 
                 </CardHeader>
 

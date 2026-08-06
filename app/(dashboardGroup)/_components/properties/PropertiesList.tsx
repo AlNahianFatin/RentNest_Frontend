@@ -94,7 +94,6 @@ export async function PropertiesList({
                         property={property}
                         categories={categories.data}
                         role={UserRole.ADMIN}
-                        // showLandlord={true}
                     />
                 ))}
 

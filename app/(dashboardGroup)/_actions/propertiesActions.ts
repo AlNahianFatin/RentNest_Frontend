@@ -144,3 +144,27 @@ export const updateProperty = async (id: string, prevState: PropertyState, formD
 
     return result;
 }
+
+export const deleteProperty = async (id: string) => {
+    const accessToken = await isAccessTokenExist();
+
+    const res = await fetch(`${process.env.BACKEND_API_URL}/api/landlord/properties/${id}`, {
+        method: "delete",
+        headers: {
+            Cookie: `accessToken=${accessToken}`
+        }
+    });
+
+    const result = await res.json();
+
+    if (result.success) {
+        revalidateTag("properties", {
+            expire: 0
+        });
+        revalidateTag("my-properties", {
+            expire: 0
+        });
+    }
+
+    return result;
+}

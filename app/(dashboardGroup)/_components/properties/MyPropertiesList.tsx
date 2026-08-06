@@ -94,8 +94,6 @@ export async function MyPropertiesList({
                         property={property}
                         categories={categories.data}
                         role={UserRole.LANDLORD}
-                        // showLandlord={false}
-                        // showTenant={true}
                     />
                 ))}
 

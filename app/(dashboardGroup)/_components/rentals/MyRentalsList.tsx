@@ -136,14 +136,6 @@ export async function MyRentalsList({
 
                                         </td>
 
-                                        {/* <td className="px-4 py-4">
-
-                                            <p className="font-medium whitespace-nowrap"> {rental.landlord.name} </p>
-
-                                            <p className="text-xs text-muted-foreground whitespace-nowrap"> {rental.landlord.email} </p>
-
-                                        </td> */}
-
                                         <td className="px-4 py-4">
 
                                             <p className="font-medium whitespace-nowrap"> {rental.rentalRequest.tenant.name} </p>

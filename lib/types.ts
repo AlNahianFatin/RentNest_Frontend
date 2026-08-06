@@ -40,7 +40,7 @@ export enum RequestStatus {
     PENDING = "PENDING"
 }
 
-type IRentalRequest = {
+export type IRentalRequest = {
     id: string,
     status: RequestStatus,
     createdAt: string,

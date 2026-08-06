@@ -33,7 +33,7 @@ export const createCategory = async (prevState: CategoryState, formData: FormDat
     };
 
     const res = await fetch(`${process.env.BACKEND_API_URL}/api/admin/categories`, {
-        method: "post",
+        method: "POST",
         headers: {
             Cookie: `accessToken=${accessToken}`,
             "Content-Type": "application/json"

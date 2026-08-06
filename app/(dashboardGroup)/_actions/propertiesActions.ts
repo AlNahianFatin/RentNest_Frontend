@@ -88,7 +88,7 @@ export const createProperty = async (prevState: PropertyState, formData: FormDat
     };
 
     const res = await fetch(`${process.env.BACKEND_API_URL}/api/landlord/properties`, {
-        method: "post",
+        method: "POST",
         headers: {
             Cookie: `accessToken=${accessToken}`,
             "Content-Type": "application/json"
@@ -123,7 +123,7 @@ export const updateProperty = async (id: string, prevState: PropertyState, formD
     };
 
     const res = await fetch(`${process.env.BACKEND_API_URL}/api/landlord/properties/${id}`, {
-        method: "put",
+        method: "PUT",
         headers: {
             Cookie: `accessToken=${accessToken}`,
             "Content-Type": "application/json"
@@ -149,7 +149,7 @@ export const deleteProperty = async (id: string) => {
     const accessToken = await isAccessTokenExist();
 
     const res = await fetch(`${process.env.BACKEND_API_URL}/api/landlord/properties/${id}`, {
-        method: "delete",
+        method: "DELETE",
         headers: {
             Cookie: `accessToken=${accessToken}`
         }

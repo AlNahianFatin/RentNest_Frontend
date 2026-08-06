@@ -22,7 +22,7 @@ const MyPropertiesPage = async () => {
                 </div>
 
                 <div className="flex flex-col gap-3 items-end">
-                    <SearchBar text="Search categories..." />
+                    <SearchBar text="Search properties..." />
                     <PropertyFormDialog mode="create" categories={categories.data} />
                 </div>
 

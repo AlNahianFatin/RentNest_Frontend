@@ -244,21 +244,35 @@ export async function MyRentalRequestsList({
                                             </Badge>
                                         </td>
 
-                                        {request.payment?.updatedAt && (<td className="px-4 py-4 whitespace-nowrap">
+                                        {
+                                            request.payment?.updatedAt ? (
+                                                <td className="px-4 py-4 whitespace-nowrap">
+                                                    {new Date(
+                                                        request.payment.updatedAt
+                                                    ).toLocaleDateString()}
+                                                </td>
+                                            ) : (
+                                                <td className="px-4 py-4 whitespace-nowrap">
+                                                    {new Date(
+                                                        request.updatedAt
+                                                    ).toLocaleDateString()}
+                                                </td>
+                                            )
+                                        }
 
-                                            {new Date(
-                                                request.payment?.updatedAt
-                                            ).toLocaleDateString()}
-
-                                        </td>)}
-
-                                        {request.payment?.currentPeriodEnd && (<td className="px-4 py-4 whitespace-nowrap">
-
-                                            {new Date(
-                                                request.payment?.currentPeriodEnd
-                                            ).toLocaleDateString()}
-
-                                        </td>)}
+                                        {
+                                            request.payment?.currentPeriodEnd ? (
+                                                <td className="px-4 py-4 whitespace-nowrap">
+                                                    {new Date(
+                                                        request.payment?.currentPeriodEnd
+                                                    ).toLocaleDateString()}
+                                                </td>
+                                            ) : (
+                                                <td className="px-4 py-4 whitespace-nowrap flex justify-center">
+                                                    ---
+                                                </td>
+                                            )
+                                        }
 
                                     </tr>
                                 ))}

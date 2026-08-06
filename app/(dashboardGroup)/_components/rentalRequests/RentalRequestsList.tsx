@@ -249,21 +249,35 @@ export async function RentalRequestsList({
                                             </Badge>
                                         </td>
 
-                                        {rental.payment?.updatedAt && (<td className="px-4 py-4 whitespace-nowrap">
-
-                                            {new Date(
-                                                rental.payment?.updatedAt
-                                            ).toLocaleDateString()}
-
-                                        </td>)}
-
-                                        {rental.payment?.currentPeriodEnd && (<td className="px-4 py-4 whitespace-nowrap">
-
-                                            {new Date(
-                                                rental.payment?.currentPeriodEnd
-                                            ).toLocaleDateString()}
-
-                                        </td>)}
+                                        {
+                                            rental.payment?.updatedAt ? (
+                                                <td className="px-4 py-4 whitespace-nowrap">
+                                                    {new Date(
+                                                        rental.payment.updatedAt
+                                                    ).toLocaleDateString()}
+                                                </td>
+                                            ) : (
+                                                <td className="px-4 py-4 whitespace-nowrap">
+                                                    {new Date(
+                                                        rental.updatedAt
+                                                    ).toLocaleDateString()}
+                                                </td>
+                                            )
+                                        }
+                                        
+                                        {
+                                            rental.payment?.currentPeriodEnd ? (
+                                                <td className="px-4 py-4 whitespace-nowrap">
+                                                    {new Date(
+                                                        rental.payment?.currentPeriodEnd
+                                                    ).toLocaleDateString()}
+                                                </td>
+                                            ) : (
+                                                <td className="px-4 py-4 whitespace-nowrap flex justify-center">
+                                                    ---
+                                                </td>
+                                            )
+                                        }
 
                                     </tr>
                                 ))}

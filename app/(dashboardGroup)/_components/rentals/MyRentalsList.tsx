@@ -44,7 +44,7 @@ export async function MyRentalsList({
     return (
         <div className="space-y-6">
 
-            <div className="grid grid-cols-2 gap-50 md:grid-cols-2">
+            <div className="grid grid-cols-1 gap-x-50 gap-y-6 md:grid-cols-2">
 
                 {stats.map((stat) => {
                     const Icon = stat.icon;

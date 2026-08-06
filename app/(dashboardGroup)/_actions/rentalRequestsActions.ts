@@ -1,6 +1,6 @@
 "use server"
 
-import { RequestStatus } from "@/lib/types";
+import { RequestStatus, UserRole } from "@/lib/types";
 import { isAccessTokenExist } from "@/service/refreshToken";
 import { revalidateTag } from "next/cache";
 
@@ -24,7 +24,7 @@ export const getRentalRequests = async ({ query }: { query?: { [key: string]: st
     return result;
 }
 
-export const getMyRentalRequests = async ({ query }: { query?: { [key: string]: string | string[] | undefined } }) => {
+export const getMyRentalRequests = async ({ query }: { query?: { [key: string]: string | string[] | undefined } }, role: UserRole) => {
     const params = new URLSearchParams()
 
     if (query && query.searchTerm)
@@ -32,12 +32,23 @@ export const getMyRentalRequests = async ({ query }: { query?: { [key: string]: 
 
     const accessToken = await isAccessTokenExist();
 
-    const res = await fetch(`${process.env.BACKEND_API_URL}/api/landlord/requests?${params.toString()}`, {
-        headers: {
-            Cookie: `accessToken=${accessToken}`
-        },
-        cache: "no-cache"
-    });
+    let res = null;
+    if (role === UserRole.LANDLORD) {
+        res = await fetch(`${process.env.BACKEND_API_URL}/api/landlord/requests?${params.toString()}`, {
+            headers: {
+                Cookie: `accessToken=${accessToken}`
+            },
+            cache: "no-cache"
+        });
+    }
+    else {
+        res = await fetch(`${process.env.BACKEND_API_URL}/api/rentals?${params.toString()}`, {
+            headers: {
+                Cookie: `accessToken=${accessToken}`
+            },
+            cache: "no-cache"
+        });
+    }
 
     const result = await res.json();
 
@@ -66,6 +77,32 @@ export const manageMyRentalRequests = async (id: string, status: RequestStatus) 
             expire: 0
         });
         revalidateTag("my-properties", {
+            expire: 0
+        });
+    }
+
+    return result;
+}
+
+export const submitRentalRequest = async (id: string) => {
+    const accessToken = await isAccessTokenExist();
+
+    const payload = { rentalRequestId: id };
+
+    const res = await fetch(`${process.env.BACKEND_API_URL}/api/payments/create`, {
+        method: "POST",
+        headers: {
+            Cookie: `accessToken=${accessToken}`,
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload),
+        cache: "no-cache"
+    });
+
+    const result = await res.json();
+
+    if (result.success) {
+        revalidateTag("properties", {
             expire: 0
         });
     }

@@ -9,12 +9,12 @@ const MyRentalRequestsPage = () => {
             <div className="flex items-center justify-between">
                 <div>
                     <h1 className="text-2xl font-semibold">My Rental Requests</h1>
-                    <p className="text-sm text-muted-foreground"> Manage received rental requests. </p>
+                    <p className="text-sm text-muted-foreground"> View sent rental requests. </p>
                 </div>
             </div>
 
             <Suspense fallback={<RentalRequestsSkeleton />}>
-                <MyRentalRequestsList role={UserRole.LANDLORD} />
+                <MyRentalRequestsList role={UserRole.TENANT} />
             </Suspense>
         </div>
     );

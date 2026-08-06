@@ -3,24 +3,27 @@ import { BanknoteArrowDown, BanknoteCheck, BanknoteX, ScrollText } from "lucide-
 import { Card, CardContent } from "@/components/ui/card";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
-import { PaymentStatus, RentalStatus, RequestStatus } from "@/lib/types";
+import { PaymentStatus, PropertyStatus, RentalStatus, RequestStatus, UserRole } from "@/lib/types";
 import RequestStatusButton from "./RequestStatusButton";
+import RentButton from "./RentButton";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 export async function MyRentalRequestsList({
     searchParams,
+    role
 }: {
     searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
+    role: UserRole
 }) {
     const query = await searchParams;
 
-    const request = await getMyRentalRequests({ query });
+    const request = await getMyRentalRequests({ query }, role);
 
     if (!request.success || !request.data?.length) {
         return (
             <p className="py-12 text-center text-muted-foreground">
-                No renal request found at the moment!
+                No rental request found at the moment!
             </p>
         );
     }
@@ -43,14 +46,26 @@ export async function MyRentalRequestsList({
             value: request.meta.totalRejectedRentalRequestCount,
             icon: BanknoteX,
             description: "Requests rejected",
-        },
-        {
+        }
+    ];
+
+    if (role === UserRole.LANDLORD) {
+        stats.push({
             title: "Total Received Requests",
             value: request.meta.totalRentalRequestCount,
             icon: ScrollText,
             description: "Total requests received till now",
-        },
-    ];
+        })
+    }
+
+    else if (role === UserRole.TENANT) {
+        stats.push({
+            title: "Total Sent Requests",
+            value: request.meta.totalRentalRequestCount,
+            icon: ScrollText,
+            description: "Total requests sent till now",
+        })
+    }
 
     return (
         <div className="space-y-6">
@@ -70,12 +85,16 @@ export async function MyRentalRequestsList({
 
                                 <div className="min-w-0">
 
-                                    <p className="truncate text-xs text-muted-foreground">
+                                    <p className="text-sm text-muted-foreground">
                                         {stat.title}
                                     </p>
 
                                     <p className="text-xl font-bold leading-none">
                                         {stat.value}
+                                    </p>
+                                    
+                                    <p className="text-xs text-muted-foreground">
+                                        {stat.description}
                                     </p>
 
                                 </div>
@@ -104,13 +123,17 @@ export async function MyRentalRequestsList({
                                         Property
                                     </th>
 
-                                    {/* <th className="px-4 py-3 text-left">
-                                        Landlord
-                                    </th> */}
-
-                                    <th className="px-4 py-3 text-left">
-                                        Requested by
-                                    </th>
+                                    {
+                                        role === UserRole.LANDLORD ? (
+                                            <th className="px-4 py-3 text-left">
+                                                Requested by
+                                            </th>
+                                        ) : (
+                                            <th className="px-4 py-3 text-left">
+                                                Requested To
+                                            </th>
+                                        )
+                                    }
 
                                     <th className="px-4 py-3 text-left">
                                         Request Status
@@ -186,13 +209,29 @@ export async function MyRentalRequestsList({
 
                                         <td className="px-4 py-4">
 
-                                            <p className="font-medium whitespace-nowrap">
-                                                {request.tenant.name}
-                                            </p>
+                                            {
+                                                role === UserRole.LANDLORD ? (
+                                                    <>
+                                                        <p className="font-medium whitespace-nowrap">
+                                                            {request.tenant.name}
+                                                        </p>
 
-                                            <p className="text-xs text-muted-foreground whitespace-nowrap">
-                                                {request.tenant.email}
-                                            </p>
+                                                        <p className="text-xs text-muted-foreground whitespace-nowrap">
+                                                            {request.tenant.email}
+                                                        </p>
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        <p className="font-medium whitespace-nowrap">
+                                                            {request.property.landlord.name}
+                                                        </p>
+
+                                                        <p className="text-xs text-muted-foreground whitespace-nowrap">
+                                                            {request.property.landlord.email}
+                                                        </p>
+                                                    </>
+                                                )
+                                            }
 
                                         </td>
 
@@ -210,11 +249,20 @@ export async function MyRentalRequestsList({
                                             </Badge>
                                         </td>
 
-                                        <td className="px-4 py-4">
-
-                                            <RequestStatusButton request={request} />
-
-                                        </td>
+                                        {
+                                            role === UserRole.LANDLORD ? (
+                                                <td className="px-4 py-4">
+                                                    <RequestStatusButton request={request} />
+                                                </td>
+                                            ) : role === UserRole.TENANT && request.status === RequestStatus.ACCEPTED &&
+                                                request.property.status === PropertyStatus.AVAILABLE ? (
+                                                <td className="px-4 py-4">
+                                                    <RentButton request={request} />
+                                                </td>
+                                            ) : (
+                                                <td className="px-4 py-4 whitespace-nowrap flex justify-center"> </td>
+                                            )
+                                        }
 
                                         <td className="px-4 py-4">
                                             <Badge

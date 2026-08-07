@@ -1,4 +1,4 @@
-import { getMyRentals } from "../../_actions/rentalsActions";
+import { getMyRentalRecords } from "../../_actions/rentsActions";
 import { Banknote, MapPinHouse } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import Image from "next/image";
@@ -7,14 +7,14 @@ import { PaymentStatus, RentalStatus } from "@/lib/types";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-export async function MyRentalsList({
+export async function MyRentalRecordsList({
     searchParams,
 }: {
     searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
     const query = await searchParams;
 
-    const rental = await getMyRentals({ query });
+    const rental = await getMyRentalRecords({ query });
 
     if (!rental.success || !rental.data?.length) {
         return (
@@ -24,20 +24,18 @@ export async function MyRentalsList({
         );
     }
 
-    const totalRent = rental.meta.totalRent._sum.price ?? 0;
-
     const stats = [
         {
-            title: "Monthly Rent",
-            value: `৳  ${totalRent}`,
-            icon: Banknote,
-            description: "Monthly rent receiving",
+            title: "Current Rentals",
+            value: rental.meta.totalCurrentRecordCount,
+            icon: MapPinHouse,
+            description: "Currently rented properties",
         },
         {
-            title: "Rentals",
-            value: rental.meta.totalRentalCount,
+            title: "Total Rentals",
+            value: rental.meta.totalRecordCount,
             icon: MapPinHouse,
-            description: "Rented properties",
+            description: "Total rented properties",
         }
     ];
 
@@ -90,7 +88,7 @@ export async function MyRentalsList({
 
                                     <th className="px-4 py-3 text-left"> Property </th>
 
-                                    <th className="px-4 py-3 text-left"> Tenant </th>
+                                    <th className="px-4 py-3 text-left"> Landlord </th>
 
                                     <th className="px-4 py-3 text-left"> Payment Status </th>
 
@@ -142,9 +140,9 @@ export async function MyRentalsList({
 
                                         <td className="px-4 py-4">
 
-                                            <p className="font-medium whitespace-nowrap"> {rental.rentalRequest.tenant.name} </p>
+                                            <p className="font-medium whitespace-nowrap"> {rental.rentalRequest.landlord.name} </p>
 
-                                            <p className="text-xs text-muted-foreground whitespace-nowrap"> {rental.rentalRequest.tenant.email} </p>
+                                            <p className="text-xs text-muted-foreground whitespace-nowrap"> {rental.rentalRequest.landlord.email} </p>
 
                                         </td>
 

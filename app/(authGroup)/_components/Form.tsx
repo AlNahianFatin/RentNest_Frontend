@@ -34,7 +34,7 @@ const Form = ({ mode }: Props) => {
             : RegisterAction.bind(null, redirectTo);
 
     const [state, action, pending] = useActionState(serverAction, null);
-    const [role, setRole] = useState("TENANT");
+    const [role, setRole] = useState("");
 
     useEffect(() => {
         if (!state)
@@ -97,17 +97,29 @@ const Form = ({ mode }: Props) => {
                     <>
                         <input type="hidden" name="role" value={role} />
                         <DropdownMenu>
+
                             <DropdownMenuTrigger asChild>
-                                <Button variant="outline">{role}</Button>
+                                <Button variant="outline" className="w-full justify-between">
+                                    {/* {role} */}
+                                    {role ? role : "Select role"}
+                                </Button>
                             </DropdownMenuTrigger>
+
                             <DropdownMenuContent className="w-32">
+
                                 <DropdownMenuGroup>
+
                                     <DropdownMenuRadioGroup value={role} onValueChange={setRole}>
+
                                         <DropdownMenuRadioItem value="TENANT">TENANT</DropdownMenuRadioItem>
                                         <DropdownMenuRadioItem value="LANDLORD">LANDLORD</DropdownMenuRadioItem>
+
                                     </DropdownMenuRadioGroup>
+
                                 </DropdownMenuGroup>
+
                             </DropdownMenuContent>
+
                         </DropdownMenu>
                     </>
                 )}

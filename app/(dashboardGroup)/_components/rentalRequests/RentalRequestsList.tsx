@@ -69,12 +69,16 @@ export async function RentalRequestsList({
 
                                 <div className="min-w-0">
 
-                                    <p className="truncate text-xs text-muted-foreground">
+                                    <p className="text-sm text-muted-foreground">
                                         {stat.title}
                                     </p>
 
-                                    <p className="text-xl font-bold leading-none">
+                                    <p className="text-3xl font-bold">
                                         {stat.value}
+                                    </p>
+
+                                    <p className="text-xs text-muted-foreground">
+                                        {stat.description}
                                     </p>
 
                                 </div>

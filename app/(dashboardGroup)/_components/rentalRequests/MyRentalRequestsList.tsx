@@ -89,10 +89,10 @@ export async function MyRentalRequestsList({
                                         {stat.title}
                                     </p>
 
-                                    <p className="text-xl font-bold leading-none">
+                                    <p className="text-3xl font-bold">
                                         {stat.value}
                                     </p>
-                                    
+
                                     <p className="text-xs text-muted-foreground">
                                         {stat.description}
                                     </p>

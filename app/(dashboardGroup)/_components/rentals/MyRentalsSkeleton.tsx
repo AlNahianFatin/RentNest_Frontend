@@ -10,7 +10,7 @@ export function MyRentalsSkeleton() {
 
                 {[1, 2].map((item) => (
                     <Card key={item}>
-                        <CardContent className="flex items-center gap-3 p-3">
+                        <CardContent className="flex items-center gap-3 p-6">
 
                             <Skeleton className="h-10 w-10 rounded-full" />
 

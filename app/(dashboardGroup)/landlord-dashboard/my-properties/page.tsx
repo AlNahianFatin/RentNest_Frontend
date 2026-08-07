@@ -17,8 +17,8 @@ const MyPropertiesPage = async () => {
             <div className="flex items-center justify-between">
 
                 <div>
-                    <h1 className="text-2xl font-semibold"> Categories </h1>
-                    <p className="text-sm text-muted-foreground"> Create and manage property categories. </p>
+                    <h1 className="text-2xl font-semibold"> Properties </h1>
+                    <p className="text-sm text-muted-foreground"> Create and manage properties. </p>
                 </div>
 
                 <div className="flex flex-col gap-3 items-end">

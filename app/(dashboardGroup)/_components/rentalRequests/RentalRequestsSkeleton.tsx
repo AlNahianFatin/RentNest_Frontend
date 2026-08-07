@@ -10,7 +10,7 @@ export function RentalRequestsSkeleton() {
 
                 {Array.from({ length: 4 }).map((_, index) => (
                     <Card key={index}>
-                        <CardContent className="flex items-center gap-3 p-3">
+                        <CardContent className="flex items-center gap-3 p-6">
 
                             <Skeleton className="h-8 w-8 rounded-full" />
 

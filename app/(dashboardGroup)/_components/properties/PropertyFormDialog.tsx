@@ -115,8 +115,7 @@ export function PropertyFormDialog({ mode, property, categories }: PropertyFormD
                                     <DropdownMenuTrigger asChild>
                                         <Button
                                             variant="outline"
-                                            className="w-full justify-between"
-                                        >
+                                            className="w-full justify-between" >
                                             {
                                                 categories?.find(
                                                     (cat) => cat.id === category
@@ -151,6 +150,7 @@ export function PropertyFormDialog({ mode, property, categories }: PropertyFormD
                             </div>
                         </>
                     )}
+
                     {mode === "delete" && (
                         <div className="space-y-2">
                             <p>Are you sure you want to remove property &quot;{property?.location}&quot;?</p>

@@ -47,11 +47,8 @@ export default function RequestStatusButton({ request }: RequestStatusButtonProp
             toast.error(result.message);
     };
 
-
-    // Hide dropdown if payment and rental are completed
     if (request.payment?.paymentStatus === PaymentStatus.COMPLETED && request.payment?.rentalStatus === RentalStatus.ACTIVE)
         return null;
-
 
     return (
         <DropdownMenu>

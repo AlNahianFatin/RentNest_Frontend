@@ -49,7 +49,8 @@ export function MyRentalRecordsSkeleton() {
                                             "Payment Status",
                                             "Rental Status",
                                             "Rented On",
-                                            "Rental Expires"
+                                            "Rental Expires",
+                                            "Review"
                                         ].map((header) => (
                                             <th
                                                 key={header}
@@ -136,6 +137,13 @@ export function MyRentalRecordsSkeleton() {
 
 
                                             {/* Rental Expires */}
+                                            <td className="px-4 py-4">
+
+                                                <Skeleton className="h-4 w-24" />
+
+                                            </td>
+                                            
+                                            {/* Review */}
                                             <td className="px-4 py-4">
 
                                                 <Skeleton className="h-4 w-24" />

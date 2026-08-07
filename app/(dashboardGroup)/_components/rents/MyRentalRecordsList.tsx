@@ -1,9 +1,11 @@
 import { getMyRentalRecords } from "../../_actions/rentsActions";
-import { Banknote, MapPinHouse } from "lucide-react";
+import { Ban, MapPinHouse, RotateCwFadingClock } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
-import { PaymentStatus, RentalStatus } from "@/lib/types";
+import { PaymentStatus, RentalStatus, ReviewStatus } from "@/lib/types";
+import { ReviewFormDialog } from "../reviews/ReviewFormDialog";
+import { Button } from "@/components/ui/button";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -28,7 +30,7 @@ export async function MyRentalRecordsList({
         {
             title: "Current Rentals",
             value: rental.meta.totalCurrentRecordCount,
-            icon: MapPinHouse,
+            icon: RotateCwFadingClock,
             description: "Currently rented properties",
         },
         {
@@ -97,6 +99,8 @@ export async function MyRentalRecordsList({
                                     <th className="px-4 py-3 text-left"> Rented On </th>
 
                                     <th className="px-4 py-3 text-left"> Rental Expires </th>
+
+                                    <th className="px-4 py-3 text-left"> Review </th>
 
                                 </tr>
                             </thead>
@@ -189,6 +193,18 @@ export async function MyRentalRecordsList({
                                             ).toLocaleDateString()}
 
                                         </td>)}
+
+                                        {/* {rental.paymentStatus === PaymentStatus.COMPLETED ? (<td className="px-4 py-4 whitespace-nowrap">
+                                            <ReviewFormDialog propertyId={rental?.rentalRequest?.propertyId} review={rental?.rentalRequest?.property?.reviews?.[0]} />
+                                        </td>) : <td></td>} */}
+
+                                        {
+                                            rental.paymentStatus === PaymentStatus.COMPLETED && rental?.rentalRequest?.property?.reviews?.[0].status !== ReviewStatus.REJECTED ? <td className="px-4 py-4 whitespace-nowrap">
+                                                <ReviewFormDialog propertyId={rental?.rentalRequest?.propertyId} review={rental?.rentalRequest?.property?.reviews?.[0]} />
+                                            </td> : <td>
+                                                <Button disabled variant={"destructive"}> <Ban /> Blocked </Button>
+                                            </td>
+                                        }
 
                                     </tr>
                                 ))}

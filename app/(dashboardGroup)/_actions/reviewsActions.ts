@@ -49,11 +49,10 @@ export const updateReview = async (id: string, prevState: ReviewState, formData:
 
     const payload = {
         rating: Number(formData.get("rating")),
-        comment: formData.get("comment"),
-        propertyId: id
+        comment: formData.get("comment")
     };
 
-    const res = await fetch(`${process.env.BACKEND_API_URL}/api/reviews`, {
+    const res = await fetch(`${process.env.BACKEND_API_URL}/api/reviews/${id}`, {
         method: "PATCH",
         headers: {
             Cookie: `accessToken=${accessToken}`,
@@ -64,10 +63,40 @@ export const updateReview = async (id: string, prevState: ReviewState, formData:
 
     const result = await res.json();
 
-    if (result.success)
-        revalidateTag("categories", {
+    if (result.success) {
+        revalidateTag("properties", {
             expire: 0
         });
+
+        revalidateTag("my-properties", {
+            expire: 0
+        });
+    }
+
+    return result;
+}
+
+export const deleteReview = async (id: string) => {
+    const accessToken = await isAccessTokenExist();
+
+    const res = await fetch(`${process.env.BACKEND_API_URL}/api/reviews/${id}`, {
+        method: "DELETE",
+        headers: {
+            Cookie: `accessToken=${accessToken}`
+        }
+    });
+
+    const result = await res.json();
+
+    // if (result.success) {
+    //     revalidateTag("properties", {
+    //         expire: 0
+    //     });
+
+    //     revalidateTag("my-properties", {
+    //         expire: 0
+    //     });
+    // }
 
     return result;
 }

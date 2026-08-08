@@ -41,7 +41,8 @@ export function PropertyFormDialog({ mode, property, categories }: PropertyFormD
                 mode === "delete" ? "Property removed successfully" : "Property created successfully"));
             // eslint-disable-next-line react-hooks/set-state-in-effect -- closing the dialog is the intended reaction to the server action's result, not a render loop
             setOpen(false);
-        } else
+        }
+        else
             toast.error(state.message || "Something went wrong");
     }, [state, mode]);
 

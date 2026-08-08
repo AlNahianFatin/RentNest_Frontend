@@ -4,8 +4,10 @@ import { Card, CardContent } from "@/components/ui/card";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { PaymentStatus, RentalStatus, ReviewStatus } from "@/lib/types";
-import { ReviewFormDialog } from "../reviews/ReviewFormDialog";
 import { Button } from "@/components/ui/button";
+import { DeleteReviewButton } from "../reviews/DeleteReviewButton";
+import { EditReviewButton } from "../reviews/EditReviewButton";
+import { PostReviewButton } from "../reviews/PostReviewButton";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -88,19 +90,19 @@ export async function MyRentalRecordsList({
                             <thead className="border-b bg-muted/50">
                                 <tr>
 
-                                    <th className="px-4 py-3 text-left"> Property </th>
+                                    <th className="px-4 py-3 text-center"> Property </th>
 
-                                    <th className="px-4 py-3 text-left"> Landlord </th>
+                                    <th className="px-4 py-3 text-center"> Landlord </th>
 
-                                    <th className="px-4 py-3 text-left"> Payment Status </th>
+                                    <th className="px-4 py-3 text-center"> Payment Status </th>
 
-                                    <th className="px-4 py-3 text-left"> Rental Status </th>
+                                    <th className="px-4 py-3 text-center"> Rental Status </th>
 
-                                    <th className="px-4 py-3 text-left"> Rented On </th>
+                                    <th className="px-4 py-3 text-center"> Rented On </th>
 
-                                    <th className="px-4 py-3 text-left"> Rental Expires </th>
+                                    <th className="px-4 py-3 text-center"> Rental Expires </th>
 
-                                    <th className="px-4 py-3 text-left"> Review </th>
+                                    <th className="px-4 py-3 text-center"> Review </th>
 
                                 </tr>
                             </thead>
@@ -123,7 +125,7 @@ export async function MyRentalRecordsList({
                                                     loading="eager"
                                                 />
 
-                                                <div className="min-w-45">
+                                                <div className="min-w-55">
 
                                                     <p className="font-medium"> {rental.rentalRequest.property?.location} </p>
 
@@ -194,16 +196,48 @@ export async function MyRentalRecordsList({
 
                                         </td>)}
 
-                                        {/* {rental.paymentStatus === PaymentStatus.COMPLETED ? (<td className="px-4 py-4 whitespace-nowrap">
-                                            <ReviewFormDialog propertyId={rental?.rentalRequest?.propertyId} review={rental?.rentalRequest?.property?.reviews?.[0]} />
-                                        </td>) : <td></td>} */}
-
                                         {
-                                            rental.paymentStatus === PaymentStatus.COMPLETED && rental?.rentalRequest?.property?.reviews?.[0].status !== ReviewStatus.REJECTED ? <td className="px-4 py-4 whitespace-nowrap">
-                                                <ReviewFormDialog propertyId={rental?.rentalRequest?.propertyId} review={rental?.rentalRequest?.property?.reviews?.[0]} />
-                                            </td> : <td>
-                                                <Button disabled variant={"destructive"}> <Ban /> Blocked </Button>
-                                            </td>
+                                            rental.paymentStatus === PaymentStatus.COMPLETED ? (
+
+                                                rental?.rentalRequest?.property?.reviews?.[0] &&
+                                                    rental?.rentalRequest?.property?.reviews?.[0]?.status !== ReviewStatus.REJECTED ? (
+
+                                                    <td className="px-4 py-4 whitespace-nowrap">
+                                                        <div className="flex gap-2">
+
+                                                            <EditReviewButton
+                                                                review={rental.rentalRequest.property.reviews[0]}
+                                                            />
+
+                                                            <DeleteReviewButton
+                                                                review={rental.rentalRequest.property.reviews[0]}
+                                                            />
+
+                                                        </div>
+                                                    </td>
+
+                                                ) : (
+
+                                                    <td className="px-4 py-4 whitespace-nowrap">
+
+                                                        <PostReviewButton
+                                                            propertyId={rental.rentalRequest.propertyId}
+                                                        />
+
+                                                    </td>
+
+                                                )
+
+                                            ) : (
+
+                                                <td className="px-4 py-4 whitespace-nowrap">
+                                                    <Button disabled variant="destructive">
+                                                        <Ban />
+                                                        Blocked
+                                                    </Button>
+                                                </td>
+
+                                            )
                                         }
 
                                     </tr>

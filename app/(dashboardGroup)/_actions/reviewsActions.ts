@@ -31,15 +31,15 @@ export const createReview = async (id: string, prevState: ReviewState, formData:
 
     const result = await res.json();
 
-    if (result.success) {
-        revalidateTag("properties", {
-            expire: 0
-        });
+    // if (result.success) {
+    //     revalidateTag("properties", {
+    //         expire: 0
+    //     });
 
-        revalidateTag("my-properties", {
-            expire: 0
-        });
-    }
+    //     revalidateTag("my-properties", {
+    //         expire: 0
+    //     });
+    // }
 
     return result;
 }
@@ -88,15 +88,37 @@ export const deleteReview = async (id: string) => {
 
     const result = await res.json();
 
-    // if (result.success) {
-    //     revalidateTag("properties", {
-    //         expire: 0
-    //     });
+    return result;
+}
 
-    //     revalidateTag("my-properties", {
-    //         expire: 0
-    //     });
-    // }
+export async function updateReviewStatus(id: string, prevState: ReviewState, formData: FormData) {
+    const accessToken = await isAccessTokenExist();
+
+    const status = formData.get("status") as string;
+
+    const payload = { reviewId: id, status }
+
+    const res = await fetch(`${process.env.BACKEND_API_URL}/api/admin/reviews`, {
+        method: "PATCH",
+        headers: {
+            Cookie: `accessToken=${accessToken}`,
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+    }
+    );
+
+    const result = await res.json();
+
+    if (result.success) {
+        revalidateTag("properties", {
+            expire: 0
+        });
+
+        revalidateTag("my-properties", {
+            expire: 0
+        });
+    }
 
     return result;
 }

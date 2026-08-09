@@ -7,10 +7,10 @@ type Props = {
     params: Promise<{ id: string }>;
 };
 
-export default function PropertyDetailsPage({ params }: Props, role: UserRole) {
+export default function PropertyDetailsPage({ params }: Props) {
     return (
         <Suspense fallback={<PropertySkeleton />}>
-            <PropertyDetails params={params} role={role} />
+            <PropertyDetails params={params} role={UserRole.LANDLORD} />
         </Suspense>
     );
 }

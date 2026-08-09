@@ -42,7 +42,7 @@ export function PropertyCard({
 
         <Card className="gap-4 cursor-pointer hover:shadow-lg transition-shadow flex flex-col">
 
-            <Link href={href} className="block" role={role}>
+            <Link href={href} className="block">
 
                 <>
                     {
@@ -161,8 +161,6 @@ export function PropertyCard({
                 </>
 
             </Link>
-
-
 
             {
                 role === UserRole.LANDLORD && (

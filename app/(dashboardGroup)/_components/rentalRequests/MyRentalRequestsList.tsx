@@ -250,12 +250,14 @@ export async function MyRentalRequestsList({
                                         </td>
 
                                         {
-                                            role === UserRole.LANDLORD ? (
+                                            role === UserRole.LANDLORD && request.payment?.paymentStatus !== PaymentStatus.COMPLETED ? (
                                                 <td className="px-4 py-4">
                                                     <RequestStatusButton request={request} />
                                                 </td>
                                             ) : role === UserRole.TENANT && request.status === RequestStatus.ACCEPTED &&
-                                                request.property.status === PropertyStatus.AVAILABLE ? (
+                                                request.property?.status === PropertyStatus.AVAILABLE &&
+                                                request.payment?.rentalStatus !== RentalStatus.EXPIRED &&
+                                                request.payment?.rentalStatus !== RentalStatus.CANCELED ? (
                                                 <td className="px-4 py-4">
                                                     <RentButton request={request} />
                                                 </td>

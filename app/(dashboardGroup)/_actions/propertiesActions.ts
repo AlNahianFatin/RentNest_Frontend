@@ -1,5 +1,6 @@
 "use server"
 
+import { UserRole } from "@/lib/types";
 import { isAccessTokenExist } from "@/service/refreshToken";
 import { revalidateTag } from "next/cache";
 
@@ -28,7 +29,25 @@ export const getAllProperties = async ({ query }: { query?: { [key: string]: str
     return result;
 }
 
-export const getPropertyById = async (id: string) => {
+export const getPropertyById = async (id: string, role?: UserRole) => {
+    if (role && role === UserRole.ADMIN) {
+        const accessToken = await isAccessTokenExist();
+
+        const res = await fetch(`${process.env.BACKEND_API_URL}/api/admin/properties/${id}`, {
+            headers: {
+                Cookie: `accessToken=${accessToken}`
+            },
+            cache: "no-cache",
+            next: {
+                revalidate: 60 * 60 * 6,
+                tags: ["propertyById"]
+            }
+        });
+        const result = await res.json();
+
+        return result;
+    }
+
     const res = await fetch(`${process.env.BACKEND_API_URL}/api/properties/${id}`, {
         cache: "no-cache",
         next: {
@@ -36,7 +55,6 @@ export const getPropertyById = async (id: string) => {
             tags: ["propertyById"]
         }
     });
-
     const result = await res.json();
 
     return result;

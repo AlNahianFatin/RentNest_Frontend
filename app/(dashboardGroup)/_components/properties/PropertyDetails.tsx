@@ -4,8 +4,9 @@ import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { CircleCheck, CircleX, MessageSquareIcon, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { IReview, UserRole } from "@/lib/types";
+import { IReview, ReviewStatus, UserRole } from "@/lib/types";
 import RentNowButton from "@/components/shared/RentNowButton"
+import { ManageReviewStatusButton } from "../reviews/ManageReviewStatusButton";
 
 export default async function PropertyDetails({
     params,
@@ -16,7 +17,7 @@ export default async function PropertyDetails({
 }) {
     const { id } = await params;
 
-    const result = await getPropertyById(id);
+    const result = await getPropertyById(id, role);
 
     const property = result.data;
 
@@ -164,25 +165,34 @@ export default async function PropertyDetails({
                         ) : (
                             <div className="space-y-5">
 
-                                {property.reviews.map((review: IReview) => (
+                                {/* {property.reviews.map((review: IReview) => (
                                     <Card key={review.id}>
                                         <CardContent className="pt-5">
 
                                             <div className="flex justify-between">
 
-                                                <div>
-                                                    <p className="font-semibold">
-                                                        {review.reviewer.name}
-                                                    </p>
+                                                <div
+                                                    className={
+                                                        review.status === "REJECTED"
+                                                            ? "opacity-50 grayscale"
+                                                            : ""
+                                                    }
+                                                >
 
-                                                    <p className="text-sm text-muted-foreground">
-                                                        {review.reviewer.email}
-                                                    </p>
+                                                    <div>
+                                                        <p className="font-semibold">
+                                                            {review.reviewer.name}
+                                                        </p>
+
+                                                        <p className="text-sm text-muted-foreground">
+                                                            {review.reviewer.email}
+                                                        </p>
+                                                    </div>
+
+                                                    <Badge>
+                                                        ⭐ {review.rating}/5
+                                                    </Badge>
                                                 </div>
-
-                                                <Badge>
-                                                    ⭐ {review.rating}/5
-                                                </Badge>
 
                                             </div>
 
@@ -190,6 +200,116 @@ export default async function PropertyDetails({
                                                 <p className="mt-4">
                                                     {review.comment}
                                                 </p>
+                                            )}
+
+                                            {review.status === ReviewStatus.REJECTED ? (
+                                                <Badge variant={"destructive"} className="mt-4">
+                                                    {review.status}
+                                                </Badge>
+                                            ) : <Badge className="mt-4">
+                                                {review.status}
+                                            </Badge>
+                                            }
+
+
+                                            <ManageReviewStatusButton review={review} />
+
+                                        </CardContent>
+                                    </Card>
+                                ))} */}
+
+                                {property.reviews.map((review: IReview) => (
+                                    <Card
+                                        key={review.id}
+                                        className={
+                                            review.status === ReviewStatus.REJECTED
+                                                ? "border-destructive/30 bg-muted/50"
+                                                : ""
+                                        }
+                                    >
+                                        <CardContent className="pt-6 space-y-4">
+
+                                            {/* Header */}
+                                            <div className="flex items-start justify-between">
+
+                                                <div className="flex gap-3">
+
+                                                    <div className={
+                                                        review.status === ReviewStatus.REJECTED
+                                                            ? "opacity-50 grayscale"
+                                                            : ""
+                                                    } >
+                                                        <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center font-bold">
+                                                            {review.reviewer.name.charAt(0)}
+                                                        </div>
+
+                                                        <div>
+                                                            <p className="font-semibold">
+                                                                {review.reviewer.name}
+                                                            </p>
+
+                                                            <p className="text-sm text-muted-foreground">
+                                                                {review.reviewer.email}
+                                                            </p>
+                                                        </div>
+
+                                                    </div>
+
+
+                                                    {/* <div>
+                                                        <p className="font-semibold">
+                                                            {review.reviewer.name}
+                                                        </p>
+
+                                                        <p className="text-sm text-muted-foreground">
+                                                            {review.reviewer.email}
+                                                        </p>
+                                                    </div> */}
+
+                                                </div>
+
+
+                                                <Badge className={
+                                                    review.status === ReviewStatus.REJECTED
+                                                        ? "opacity-50 grayscale"
+                                                        : ""
+                                                }>
+                                                    ⭐ {review.rating}/5
+                                                </Badge>
+
+                                            </div>
+
+                                            {review.comment && (
+                                                <p
+                                                    className={
+                                                        review.status === ReviewStatus.REJECTED
+                                                            ? "text-muted-foreground italic"
+                                                            : ""
+                                                    }
+                                                >
+                                                    &quot;{review.comment}&quot;
+                                                </p>
+                                            )}
+
+
+                                            {role === UserRole.ADMIN && (
+                                                <div className="flex justify-between items-center">
+
+                                                    {
+                                                        review.status === ReviewStatus.REJECTED
+                                                            ?
+                                                            <Badge variant="destructive">
+                                                                Hidden
+                                                            </Badge>
+                                                            :
+                                                            <Badge className="bg-green-600">
+                                                                Published
+                                                            </Badge>
+                                                    }
+
+                                                    <ManageReviewStatusButton review={review} />
+
+                                                </div>
                                             )}
 
                                         </CardContent>

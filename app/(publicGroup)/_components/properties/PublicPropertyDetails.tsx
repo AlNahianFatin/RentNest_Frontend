@@ -12,13 +12,13 @@ export default async function PublicPropertyDetails({
     role
 }: {
     params: Promise<{ id: string }>;
-    role: UserRole
+    role?: UserRole
 }) {
     const { id } = await params;
 
     const result = await getPublicPropertyById(id);
 
-    const property = result.data; console.log(property)
+    const property = result.data;
 
     return (
         <div className="max-w-6xl mx-auto py-10 px-4">

@@ -1,6 +1,6 @@
 'use server'
 
-import jwt from "jsonwebtoken";
+import jwt, { JwtPayload } from "jsonwebtoken";
 
 export async function verifyToken(token: string, secret: string) {
     try {
@@ -19,3 +19,28 @@ export async function verifyToken(token: string, secret: string) {
         }
     }
 }
+
+// export async function decodeToken(token: string) {
+//     try {
+//         const decodedToken = jwt.decode(token) as JwtPayload | null;
+
+//         if (!decodedToken) {
+//             return {
+//                 success: false,
+//                 error: "Invalid token"
+//             };
+//         }
+
+//         return {
+//             success: true,
+//             data: decodedToken
+//         }
+//     }
+//     // eslint-disable-next-line @typescript-eslint/no-explicit-any
+//     catch (error: any) {
+//         return {
+//             success: false,
+//             error: error.message
+//         };
+//     }
+// }

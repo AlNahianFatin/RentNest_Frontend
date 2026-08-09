@@ -2,6 +2,7 @@ import { Navbar } from "@/components/shared/navbar";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { getMe } from "@/service/getMe";
 import DashboardSidebar from "./_components/DashboardSidebar";
+import DashboardToast from "./_components/DashboardToast";
 
 const DashboardLayout = async (
     {
@@ -17,7 +18,10 @@ const DashboardLayout = async (
             <SidebarProvider>
                 <div className="flex flex-1">
                     <DashboardSidebar user={user} />
-                    <main className="flex-1 min-w-0">{children}</main>
+                    <main className="flex-1 min-w-0">
+                        <DashboardToast />
+                        {children}
+                    </main>
                 </div>
             </SidebarProvider>
         </div>

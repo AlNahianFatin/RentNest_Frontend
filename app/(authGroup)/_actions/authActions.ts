@@ -47,6 +47,9 @@ export const LoginAction = async (redirectTo: string, previousState: LoginState,
             sameSite: "lax"
         });
 
+        if (redirectTo && typeof redirectTo === "string" && redirectTo.startsWith("/") && !redirectTo.startsWith("//"))
+            redirect(redirectTo);
+
         const decodedToken = jwt.decode(result.data.accessToken) as JwtPayload;
 
         if (decodedToken.role === UserRole.TENANT)
@@ -56,7 +59,7 @@ export const LoginAction = async (redirectTo: string, previousState: LoginState,
         else if (decodedToken.role === UserRole.ADMIN)
             redirect("/admin-dashboard");
         else
-            toast("Oops! Something went wrong");
+            toast.error("Oops! Something went wrong");
     }
 
     return result;

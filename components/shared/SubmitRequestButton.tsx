@@ -3,11 +3,11 @@
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 
-type RentNowButtonProps = {
+type SubmitRequestButtonProps = {
     propertyId: string;
 };
 
-export default function RentNowButton({ propertyId }: RentNowButtonProps) {
+export default function SubmitRequestButton({ propertyId }: SubmitRequestButtonProps) {
     const router = useRouter();
 
     const handleRentNow = () => {
@@ -17,7 +17,7 @@ export default function RentNowButton({ propertyId }: RentNowButtonProps) {
 
     return (
         <Button size="lg" className="w-full sm:w-auto" onClick={handleRentNow} >
-            Rent Now
+            Submit Request
         </Button>
     );
 }

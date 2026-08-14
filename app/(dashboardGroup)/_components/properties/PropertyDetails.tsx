@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { CircleCheck, CircleX, MessageSquareIcon, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { IReview, ReviewStatus, UserRole } from "@/lib/types";
-import RentNowButton from "@/components/shared/RentNowButton"
+import RentNowButton from "@/components/shared/SubmitRequestButton"
 import { ManageReviewStatusButton } from "../reviews/ManageReviewStatusButton";
 
 export default async function PropertyDetails({

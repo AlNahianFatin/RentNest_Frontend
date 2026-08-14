@@ -8,17 +8,17 @@ import {
 } from "@/lib/types";
 
 import { toast } from "sonner";
-import { submitRentalRequest } from "../../_actions/rentalRequestsActions";
+import { createPaymentSession } from "../../_actions/paymentActions";
 
-type RentButtonProps = {
+type RentNowButtonProps = {
     request: IRentalRequest;
 };
 
-export default function RentButton({ request }: RentButtonProps) {
+export default function RentNowButton({ request }: RentNowButtonProps) {
 
     const handleRentClick = async () => {
 
-        const result = await submitRentalRequest(request.id);
+        const result = await createPaymentSession(request.id);
 
         if (result.success)
             toast.success(result.message);

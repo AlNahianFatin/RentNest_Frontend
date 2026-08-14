@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { CircleCheck, CircleX, MessageSquareIcon, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { IReview, UserRole } from "@/lib/types";
-import RentNowButton from "@/components/shared/RentNowButton";
+import SubmitRequestButton from "@/components/shared/SubmitRequestButton";
 
 export default async function PublicPropertyDetails({ params, role }: {
     params: Promise<{ id: string }>;
@@ -101,7 +101,7 @@ export default async function PublicPropertyDetails({ params, role }: {
                         role !== UserRole.LANDLORD && (
                             <div className="flex gap-3 pt-2">
                                 {property.status === "AVAILABLE" ? (
-                                    <RentNowButton propertyId={property.id} />
+                                    <SubmitRequestButton propertyId={property.id} />
                                 ) : (
                                     <Button
                                         size="lg"

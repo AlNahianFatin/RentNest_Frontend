@@ -5,7 +5,7 @@ import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { PaymentStatus, PropertyStatus, RentalStatus, RequestStatus, UserRole } from "@/lib/types";
 import RequestStatusButton from "./RequestStatusButton";
-import RentButton from "./RentButton";
+import RentNowButton from "./RentNowButton";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -259,7 +259,7 @@ export async function MyRentalRequestsList({
                                                 request.payment?.rentalStatus !== RentalStatus.EXPIRED &&
                                                 request.payment?.rentalStatus !== RentalStatus.CANCELED ? (
                                                 <td className="px-4 py-4">
-                                                    <RentButton request={request} />
+                                                    <RentNowButton request={request} />
                                                 </td>
                                             ) : (
                                                 <td className="px-4 py-4 whitespace-nowrap flex justify-center"> </td>

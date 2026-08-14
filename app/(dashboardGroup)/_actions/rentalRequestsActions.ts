@@ -87,9 +87,9 @@ export const manageMyRentalRequests = async (id: string, status: RequestStatus) 
 export const submitRentalRequest = async (id: string) => {
     const accessToken = await isAccessTokenExist();
 
-    const payload = { rentalRequestId: id };
+    const payload = { propertyId: id };
 
-    const res = await fetch(`${process.env.BACKEND_API_URL}/api/payments/create`, {
+    const res = await fetch(`${process.env.BACKEND_API_URL}/api/rentals`, {
         method: "POST",
         headers: {
             Cookie: `accessToken=${accessToken}`,
@@ -101,11 +101,11 @@ export const submitRentalRequest = async (id: string) => {
 
     const result = await res.json();
 
-    if (result.success) {
-        revalidateTag("properties", {
-            expire: 0
-        });
-    }
+    // if (result.success) {
+    //     revalidateTag("properties", {
+    //         expire: 0
+    //     });
+    // }
 
     return result;
 }

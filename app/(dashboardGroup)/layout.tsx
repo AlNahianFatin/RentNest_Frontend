@@ -2,15 +2,9 @@ import { Navbar } from "@/components/shared/navbar";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { getMe } from "@/service/getMe";
 import DashboardSidebar from "./_components/DashboardSidebar";
-import DashboardToast from "./_components/DashboardToast";
+// import DashboardToast from "./_components/DashboardToast";
 
-const DashboardLayout = async (
-    {
-        children
-    }: {
-        children: React.ReactNode
-    }
-) => {
+const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
     const user = await getMe();
     return (
         <div className="min-h-screen flex flex-col">
@@ -19,7 +13,7 @@ const DashboardLayout = async (
                 <div className="flex flex-1">
                     <DashboardSidebar user={user} />
                     <main className="flex-1 min-w-0">
-                        <DashboardToast />
+                        {/* <DashboardToast /> */}
                         {children}
                     </main>
                 </div>

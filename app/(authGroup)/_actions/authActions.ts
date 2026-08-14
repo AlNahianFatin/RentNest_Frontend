@@ -47,8 +47,10 @@ export const LoginAction = async (redirectTo: string, previousState: LoginState,
             sameSite: "lax"
         });
 
+
         if (redirectTo && typeof redirectTo === "string" && redirectTo.startsWith("/") && !redirectTo.startsWith("//"))
             redirect(redirectTo);
+        
 
         const decodedToken = jwt.decode(result.data.accessToken) as JwtPayload;
 

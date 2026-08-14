@@ -7,16 +7,31 @@ import { Button } from "@/components/ui/button";
 import { IReview, UserRole } from "@/lib/types";
 import RentNowButton from "@/components/shared/RentNowButton";
 
-export default async function PublicPropertyDetails({
-    params,
-    role
-}: {
+export default async function PublicPropertyDetails({ params, role }: {
     params: Promise<{ id: string }>;
     role?: UserRole
 }) {
     const { id } = await params;
 
     const result = await getPublicPropertyById(id);
+
+    if (!result.success || !result.data) {
+        return (
+            <div className="max-w-6xl mx-auto py-10 px-4">
+                <Card>
+                    <CardContent className="py-10 text-center">
+                        <h2 className="text-xl font-semibold">
+                            Property not found
+                        </h2>
+
+                        <p className="text-muted-foreground mt-2">
+                            {result.message || "Unable to load this property."}
+                        </p>
+                    </CardContent>
+                </Card>
+            </div>
+        );
+    }
 
     const property = result.data;
 

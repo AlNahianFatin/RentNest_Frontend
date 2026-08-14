@@ -47,8 +47,11 @@ const Form = ({ mode }: Props) => {
                     ? "Login failed"
                     : "Registration failed")
             );
+
+            if (redirectTo)
+                router.push(redirectTo);
         }
-    }, [state, mode]);
+    }, [state, mode, redirectTo, router]);
 
     useEffect(() => {
         if (searchParams.get("registration") === "success") {

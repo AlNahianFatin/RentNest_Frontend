@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { PropertiesSkeleton } from "../../_components/properties/PropertiesSkeleton";
 import { MyPropertiesList } from "../../_components/properties/MyPropertiesList";
-import { SearchBar } from "@/components/shared/SearchBar";
+// import { SearchBar } from "@/components/shared/SearchBar";
 import { PropertyFormDialog } from "../../_components/properties/PropertyFormDialog";
 import { getCategories } from "../../_actions/categoriesActions";
 
@@ -22,7 +22,7 @@ const MyPropertiesPage = async () => {
                 </div>
 
                 <div className="flex flex-col gap-3 items-end">
-                    <SearchBar text="Search properties..." />
+                    {/* <SearchBar text="Search properties..." /> */}
                     <PropertyFormDialog mode="create" categories={categories.data} />
                 </div>
 

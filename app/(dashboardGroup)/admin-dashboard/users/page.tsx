@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { UsersSkeleton } from "../../_components/users/UsersSkeleton";
 import { UsersList } from "../../_components/users/UsersList";
-import { SearchBar } from "@/components/shared/SearchBar";
+// import { SearchBar } from "@/components/shared/SearchBar";
 
 const UsersPage = () => {
     return (
@@ -13,7 +13,7 @@ const UsersPage = () => {
                 </div>
 
                 <div className="flex flex-col gap-3 items-end">
-                    <SearchBar text="Search users..." />
+                    {/* <SearchBar text="Search users..." /> */}
                 </div>
             </div>
 

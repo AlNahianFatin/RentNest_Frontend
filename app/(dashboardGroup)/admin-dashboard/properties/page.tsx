@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { PropertiesSkeleton } from "../../_components/properties/PropertiesSkeleton";
 import { PropertiesList } from "../../_components/properties/PropertiesList";
-import { SearchBar } from "@/components/shared/SearchBar";
+// import { SearchBar } from "@/components/shared/SearchBar";
 
 const PropertiesPage = () => {
     return (
@@ -12,7 +12,7 @@ const PropertiesPage = () => {
                 </div>
 
                 <div className="flex flex-col gap-3 items-end">
-                    <SearchBar text="Search properties..." />
+                    {/* <SearchBar text="Search properties..." /> */}
                 </div>
             </div>
 

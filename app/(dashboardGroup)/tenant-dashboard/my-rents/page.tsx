@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import { MyRentsList } from "../../_components/rents/MyRentsList";
-import { SearchBar } from "@/components/shared/SearchBar";
+// import { SearchBar } from "@/components/shared/SearchBar";
 import { MyRentsSkeleton } from "../../_components/rents/MyRentsSkeleton";
 
 const MyRentsPage = () => {
@@ -12,7 +12,7 @@ const MyRentsPage = () => {
                 </div>
 
                 <div className="flex flex-col gap-3 items-end">
-                    <SearchBar text="Search properties..." />
+                    {/* <SearchBar text="Search properties..." /> */}
                 </div>
             </div>
 

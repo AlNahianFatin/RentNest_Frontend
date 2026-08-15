@@ -17,22 +17,12 @@ export default async function SubmitRentalRequestPage({ params }: { params: Prom
     const decodedToken = jwt.decode(accessToken.value) as JwtPayload;
 
     if (decodedToken.role !== UserRole.TENANT)
-        // redirect(`/${decodedToken.role.toLowerCase()}-dashboard?error=${encodeURIComponent("Only tenants can rent properties")}`);
-        // redirect(`/rental/submitRentalRequest/${propertyId}?error=${encodeURIComponent("Only tenants can rent properties")}`);
         redirect(`/properties/${id}?error=${encodeURIComponent("Only tenants can rent properties")}`);
 
     const result = await submitRentalRequest(id);
 
     if (result.success)
-        // redirect(`/tenant-dashboard?success=${encodeURIComponent(result.message || "Rental request submitted successfully")}`);
         redirect(`/properties/${id}?success=${encodeURIComponent(result.message || "Rental request submitted successfully")}`);
 
-    // redirect(`/tenant-dashboard?error=${encodeURIComponent(result.message || "Something went wrong")}`);
     redirect(`/properties/${id}?error=${encodeURIComponent(result.message || "Something went wrong")}`);
-
-    //     return (
-    //     <div className="flex min-h-screen items-center justify-center">
-    //         <SubmitRentalRequestForm propertyId={id} />
-    //     </div>
-    // );
 }

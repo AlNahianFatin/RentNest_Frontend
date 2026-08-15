@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import { CategoriesList } from "../../_components/categories/CategoriesList";
 import { CategoriesSkeleton } from "../../_components/categories/CategoriesSkeleton";
 import { CategoryFormDialog } from "../../_components/categories/CategoryFormDialog";
-import { SearchBar } from "@/components/shared/SearchBar";
+// import { SearchBar } from "@/components/shared/SearchBar";
 
 const CategoriesPage = () => {
   return (
@@ -16,7 +16,7 @@ const CategoriesPage = () => {
         </div>
 
         <div className="flex flex-col gap-3 items-end">
-          <SearchBar text="Search categories..." />
+          {/* <SearchBar text="Search categories..." /> */}
           <CategoryFormDialog mode="create" />
         </div>
 

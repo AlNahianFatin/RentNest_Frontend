@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { MyRentalsSkeleton } from "../../_components/rentals/MyRentalsSkeleton";
 import { MyRentalsList } from "../../_components/rentals/MyRentalsList";
-import { SearchBar } from "@/components/shared/SearchBar";
+// import { SearchBar } from "@/components/shared/SearchBar";
 
 const MyRentalsPage = () => {
     return (
@@ -13,7 +13,7 @@ const MyRentalsPage = () => {
                 </div>
 
                 <div className="flex flex-col gap-3 items-end">
-                    <SearchBar text="Search rentals..." />
+                    {/* <SearchBar text="Search rentals..." /> */}
                 </div>
             </div>
 

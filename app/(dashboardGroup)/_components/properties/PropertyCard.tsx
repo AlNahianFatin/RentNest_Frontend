@@ -29,6 +29,20 @@ export function PropertyCard({
 
     const reviewCount = property.reviews?.length ?? 0;
 
+    const activeRentals =
+        property.status === "RENTED"
+            ? property.rentalRequests?.filter(
+                (rentalRequest) =>
+                    rentalRequest.payment?.currentPeriodEnd &&
+                    new Date(rentalRequest.payment.currentPeriodEnd) > new Date()
+            )
+            : [];
+
+    const activeRental = activeRentals?.[0];
+
+    const rentedTenant = activeRental?.tenant;
+    const rentalEndDate = activeRental?.payment?.currentPeriodEnd;
+
     const href =
         role === "ADMIN"
             ? `/admin-dashboard/properties/${property.id}`
@@ -117,7 +131,7 @@ export function PropertyCard({
                             }
 
 
-                            {
+                            {/* {
                                 (role === UserRole.ADMIN || role === UserRole.LANDLORD) &&
                                 property.rentalRequests?.[0]?.tenant &&
                                 property.rentalRequests?.[0]?.payment?.currentPeriodEnd && (
@@ -137,7 +151,23 @@ export function PropertyCard({
                                     </div>
 
                                 )
-                            }
+                            } */}
+
+                            {(role === UserRole.ADMIN || role === UserRole.LANDLORD) &&
+                                property.status === "RENTED" &&
+                                rentedTenant && (
+                                    <div>
+                                        Rented By{" "}
+                                        {rentedTenant.name}
+                                        {rentalEndDate && (
+                                            <>
+                                                {" · "}
+                                                Expires on{" "}
+                                                {new Date(rentalEndDate).toLocaleDateString()}
+                                            </>
+                                        )}
+                                    </div>
+                                )}
 
                         </div>
 
@@ -171,7 +201,6 @@ export function PropertyCard({
                         />
                         <DeletePropertyButton
                             property={property}
-                        // categories={categories}
                         />
                     </div>
                 )

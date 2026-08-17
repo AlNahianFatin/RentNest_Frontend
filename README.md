@@ -14,7 +14,7 @@
 **A modern and intuitive user interface for seamless rental property management.**
 
 
-[Backend Repo](https://rentnest-two.vercel.app)
+[Backend Repo](https://github.com/AlNahianFatin/RentNest_Backend)
 [Live Demo](https://rentnestfrontend.vercel.app)
 
 </div>

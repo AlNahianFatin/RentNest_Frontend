@@ -37,19 +37,11 @@ RentNest Frontend serves as the user-facing application for the RentNest platfor
 
 ### Property Listing
 
-<div align="center">
-
-<img src="./public/PropertyListing.png" alt="Property Listing Screenshot" width="90%"/>
-
-</div>
+![Property Listing Screenshot](./public/PropertyListing.png)
 
 ### Property Details
 
-<div align="center">
-
-<img src="./public/PropertyDetails.png" alt="Property Details Screenshot" width="90%"/>
-
-</div>
+![Property Details Screenshot](./public/PropertyDetails.png)
 
 ## 🛠️ Tech Stack
 
@@ -152,9 +144,11 @@ The application relies on environment variables for sensitive data and configura
 
 |----------------------|-------------------------------------------------|---------|----------|
 
-| `BACKEND_API_URL` | Base URL of the RentNest backend API endpoint. | None    | Yes      |
-| `JWT_ACCESS_SECRET` | JWT secret to verify JWT authentication. | None    | Yes      |
-| `JWT_REFRESH_SECRET` | JWT refresh secret to recreate JWT access token. | None    | Yes      |
+| `BACKEND_API_URL` | Base URL of the RentNest backend API endpoint. | None | Yes |
+
+| `JWT_ACCESS_SECRET` | JWT secret to verify JWT authentication. | None | Yes |
+
+| `JWT_REFRESH_SECRET` | JWT refresh secret to recreate JWT access token. | None | Yes |
 
 ### Configuration Files
 -   `next.config.ts`: Main configuration file for Next.js.

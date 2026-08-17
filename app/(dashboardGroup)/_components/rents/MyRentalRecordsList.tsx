@@ -23,7 +23,7 @@ export async function MyRentalRecordsList({
     if (!rental.success || !rental.data?.length) {
         return (
             <p className="py-12 text-center text-muted-foreground">
-                No renal record found at the moment!
+                No rental record found at the moment!
             </p>
         );
     }
@@ -180,10 +180,10 @@ export async function MyRentalRecordsList({
                                             </Badge>
                                         </td>
 
-                                        {rental.updatedAt && (<td className="px-4 py-4 whitespace-nowrap">
+                                        {rental.createdAt && (<td className="px-4 py-4 whitespace-nowrap">
 
                                             {new Date(
-                                                rental.updatedAt
+                                                rental.createdAt
                                             ).toLocaleDateString()}
 
                                         </td>)}
@@ -196,49 +196,26 @@ export async function MyRentalRecordsList({
 
                                         </td>)}
 
-                                        {
-                                            rental.paymentStatus === PaymentStatus.COMPLETED ? (
-
-                                                rental?.rentalRequest?.property?.reviews?.[0] &&
-                                                    rental?.rentalRequest?.property?.reviews?.[0]?.status !== ReviewStatus.REJECTED ? (
-
-                                                    <td className="px-4 py-4 whitespace-nowrap">
-                                                        <div className="flex gap-2">
-
-                                                            <EditReviewButton
-                                                                review={rental.rentalRequest.property.reviews[0]}
-                                                            />
-
-                                                            <DeleteReviewButton
-                                                                review={rental.rentalRequest.property.reviews[0]}
-                                                            />
-
-                                                        </div>
-                                                    </td>
-
-                                                ) : (
-
-                                                    <td className="px-4 py-4 whitespace-nowrap">
-
-                                                        <PostReviewButton
-                                                            propertyId={rental.rentalRequest.propertyId}
-                                                        />
-
-                                                    </td>
-
-                                                )
-
+                                        <td className="px-4 py-4 whitespace-nowrap">
+                                            {rental.paymentStatus !== PaymentStatus.COMPLETED ? (
+                                                <span className="text-xs text-muted-foreground">
+                                                    ---
+                                                </span>
+                                            ) : !rental?.rentalRequest?.property?.reviews?.[0] ? (
+                                                <PostReviewButton propertyId={rental.rentalRequest.propertyId} />
+                                            ) : rental?.rentalRequest?.property?.reviews?.[0].status === ReviewStatus.REJECTED ? (
+                                                <Button disabled variant="destructive" >
+                                                    <Ban className="mr-1 h-4 w-4" />
+                                                    Blocked
+                                                </Button>
                                             ) : (
+                                                <div className="flex gap-2">
+                                                    <EditReviewButton review={rental?.rentalRequest?.property?.reviews?.[0]} />
 
-                                                <td className="px-4 py-4 whitespace-nowrap">
-                                                    <Button disabled variant="destructive">
-                                                        <Ban />
-                                                        Blocked
-                                                    </Button>
-                                                </td>
-
-                                            )
-                                        }
+                                                    <DeleteReviewButton review={rental?.rentalRequest?.property?.reviews?.[0]} />
+                                                </div>
+                                            )}
+                                        </td>
 
                                     </tr>
                                 ))}
